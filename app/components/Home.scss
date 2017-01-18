@@ -1,0 +1,56 @@
+.homeContainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  position: relative;
+  height: 600px;
+  top: 20px;
+  padding-right: 40px;
+}
+
+.treeContainer {
+  width: 100%;
+}
+
+.header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: flex-start;
+  width: 95%;
+  margin-right: 40px;
+}
+
+.levelContainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  margin-bottom: 30px;
+}
+
+.childrenContainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  min-width: 150px;
+}
+
+.vertNode {
+  border: 1px solid black;
+  border-radius: 50%;
+  width: 50px;
+  height: 35px;
+  text-align: center;
+  padding-top: 15px;
+}
+
+.highlightedNode {
+  @extend .vertNode;
+  border: 3px solid red;
+  background-color: rgba(193, 66, 66, 0.4);
+}
+
+.empty {
+  display: none;
+}
+

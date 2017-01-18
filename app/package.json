@@ -1,0 +1,15 @@
+{
+  "name": "brancher",
+  "productName": "brancher",
+  "version": "1.0.0",
+  "description": "Visualization tool for trees written in JavaScript",
+  "main": "./main.js",
+  "author": {
+    "name": "Ivey Topaz",
+    "email": "iveytopaz@gmail.com",
+    "url": "https://github.com/ivtpz"
+  },
+  "license": "MIT",
+  "dependencies": {
+  }
+}
