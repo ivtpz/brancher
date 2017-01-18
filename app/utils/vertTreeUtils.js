@@ -137,6 +137,26 @@ const highlight = (action, node) => {
   }
 };
 
+const augment = (tree, UserClass) => {
+  let testNode = new UserClass(1);
+  if (!testNode.hasOwnProperty('value' || testNode.value !== 1)) {
+    alert('Constructor must accept a value, and assign it to key "value" on returned object');
+    return;
+  }
+  // TODO: add more validation tests on userClass
+  const extendNode = (node, UC) => {
+    let extendedTree = new UC(node.value);
+    extendedTree._id = node._id;
+    let extendedChild;
+    node.children.forEach(child => {
+      extendedChild = extendNode(child, UC);
+      extendedTree.children.push(extendedChild);
+    });
+    return extendedTree;
+  };
+  return extendNode(tree, UserClass);
+};
+
 const findPathByNodeId = (id, tree) => {
   let immutablePath;
   (function traverse(treeList, currPath = []) {
@@ -159,5 +179,6 @@ export default {
   mapConnections,
   addIds,
   highlight,
-  findPathByNodeId
+  findPathByNodeId,
+  augment
 };
