@@ -6,7 +6,7 @@ import 'brace/mode/javascript';
 import 'brace/theme/twilight';
 import * as styles from './Home.scss';
 import Tree from './Tree';
-import { flatten, pause, mapConnections, highlight } from '../utils/vertTreeUtils';
+import { flatten, pause, mapConnections, highlight, augment } from '../utils/vertTreeUtils';
 import UndoRedoCreator from '../containers/UndoRedo';
 import AnimationSpeedSelector from '../components/AnimationSpeedSelector';
 
@@ -87,7 +87,8 @@ export default class VerticalTree extends Component {
     const newTree = eval(`(${this.code})`)(
       treeJSON,
       applyChangeToStore,
-      applyHighlight
+      applyHighlight,
+      augment
     );
     if (typeof newTree === 'object' && newTree.constructor.name === 'Node') {
       applyChangeToStore(newTree);
