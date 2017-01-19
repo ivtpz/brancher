@@ -6,14 +6,8 @@ class Node {
     this.children = [];
     this._id = id || Math.floor(Math.random() * 10000);
   }
-  add(value, index) {
+  _add(value, index) {
     this.children[index] = new Node(value);
-  }
-  traverse(callback) {
-    callback(this);
-    for (let child of this.children) {
-      child.traverse(callback);
-    }
   }
 }
 
@@ -43,7 +37,11 @@ const flatten = nestedObjList => {
       level.map(
         section =>
           section.size ?
-          section.map(node => node.get('value') ? [node.get('value'), node.get('highlighted') || false] : undefined)
+          section.map(node => {
+            return node.get('value') !== undefined ?
+            [node.get('value'), node.get('highlighted') || false]
+            : undefined;
+          })
           : section
       )
   );
@@ -93,17 +91,17 @@ const convertToImmutable = tree => {
 
 const convertFromBinary = (tree, newTree = new Node(tree.value)) => {
   if (tree.left) {
-    newTree.add(tree.left.value, 0);
+    newTree._add(tree.left.value, 0);
     convertFromBinary(tree.left, newTree.children[0]);
     if (!tree.right) {
-      newTree.add(undefined, 1);
+      newTree._add(undefined, 1);
     }
   }
   if (tree.right) {
-    newTree.add(tree.right.value, 1);
+    newTree._add(tree.right.value, 1);
     convertFromBinary(tree.right, newTree.children[1]);
     if (!tree.left) {
-      newTree.add(undefined, 0);
+      newTree._add(undefined, 0);
     }
   }
   return newTree;
@@ -144,17 +142,36 @@ const augment = (tree, UserClass) => {
     return;
   }
   // TODO: add more validation tests on userClass
-  const extendNode = (node, UC) => {
-    let extendedTree = new UC(node.value);
-    extendedTree._id = node._id;
-    let extendedChild;
-    node.children.forEach(child => {
-      extendedChild = extendNode(child, UC);
-      extendedTree.children.push(extendedChild);
-    });
-    return extendedTree;
-  };
-  return extendNode(tree, UserClass);
+  if (testNode.hasOwnProperty('left') && testNode.hasOwnProperty('right')) {
+    return extendBinaryNode(tree, UserClass);
+  } else {
+    return extendNode(tree, UserClass);
+  }
+};
+
+const extendNode = (node, UC) => {
+  let extendedTree = new UC(node.value);
+  extendedTree._id = node._id;
+  let extendedChild;
+  node.children.forEach(child => {
+    extendedChild = extendNode(child, UC);
+    extendedTree.children.push(extendedChild);
+  });
+  return extendedTree;
+};
+
+const extendBinaryNode = (node, UC) => {
+  let extendedTree = new UC(node.value);
+  extendedTree._id = node._id;
+  if (node.children.length) {
+    if (node.children[0] && node.children[0].value !== undefined) {
+      extendedTree.left = extendBinaryNode(node.children[0], UC);
+    }
+    if (node.children[1] && node.children[1].value !== undefined) {
+      extendedTree.right = extendBinaryNode(node.children[1], UC);
+    }
+  }
+  return extendedTree;
 };
 
 const findPathByNodeId = (id, tree) => {
