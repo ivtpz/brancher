@@ -45,6 +45,7 @@ export default class VerticalTree extends Component {
             anchor: ['Perimeter', { shape: 'Circle', anchorCount: 180 }],
             endpoint: ['Dot', { radius: 1 }],
             connector: ['Straight'],
+            paintStyle: { stroke: 'gray', strokeWidth: 2 }
           });
         });
       }
@@ -96,7 +97,7 @@ export default class VerticalTree extends Component {
   }
 
   render() {
-    const { treeData, userCode } = this.props;
+    const { treeData, userCode, delay } = this.props;
     const treeArray = flatten(treeData.present).toJS();
     return (
       <div>
@@ -117,9 +118,9 @@ export default class VerticalTree extends Component {
                           key={ind}
                           levelID={index}
                           sectionID={ind}
-                          numInSection={section.length}
                           numSections={treeLevel.length}
                           value={section}
+                          delay={delay}
                         />
                     )
                   }
@@ -130,14 +131,15 @@ export default class VerticalTree extends Component {
           <AceEditor
             mode='javascript'
             theme='twilight'
-            width='700px'
+            width='70%'
             fontSize={16}
             tabSize={2}
             wrapEnabled
             value={userCode}
             onChange={
               this.onChange.bind(this)
-            } name='TREE_EDITOR'
+            }
+            name='TREE_EDITOR'
             editorProps={{ $blockScrolling: true }}
             onLoad={
               editor => {

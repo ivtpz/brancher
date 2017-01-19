@@ -36,21 +36,68 @@
 }
 
 .vertNode {
-  border: 1px solid black;
+  border: 2px solid dimgray;
   border-radius: 50%;
   width: 50px;
   height: 35px;
   text-align: center;
   padding-top: 15px;
+  font-size: 18px;
 }
 
 .highlightedNode {
   @extend .vertNode;
-  border: 3px solid red;
+  border: 2px solid red;
   background-color: rgba(193, 66, 66, 0.4);
 }
 
 .empty {
   display: none;
 }
+
+.button_info {
+  font-size: 18px;
+  padding: 3px;
+  color: grey;
+}
+
+
+@mixin box-shadow($top, $left, $blur, $color, $inset: false) {
+  @if $inset {
+    -webkit-box-shadow:inset $top $left $blur $color;
+    -moz-box-shadow:inset $top $left $blur $color;
+    box-shadow:inset $top $left $blur $color;
+  } @else {
+    -webkit-box-shadow: $top $left $blur $color;
+    -moz-box-shadow: $top $left $blur $color;
+    box-shadow: $top $left $blur $color;
+  }
+}
+
+button {
+  border-radius: 5px;
+  border: 2px solid gainsboro;
+  padding: 4px;
+  min-width: 30px;
+  font-size: 18px;
+  background-color: white;
+  transition: all 0.3s ease 0s;
+  cursor: pointer;
+  &:hover:enabled {
+    border: 2px solid grey;
+    @include box-shadow(0, 3px, 4px, rgba(0, 0, 0, 0.2));
+  }
+  &:hover:disabled {
+    cursor: default;
+    border: 2px solid gainsboro;
+    @include box-shadow(0, 0.5px, 1px, rgba(0, 0, 0, 0.2));
+  }
+  &:focus {
+    outline: 0;
+  }
+  &:active {
+    background-color: slategrey;
+  }
+}
+
 
