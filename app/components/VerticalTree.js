@@ -128,27 +128,29 @@ export default class VerticalTree extends Component {
               );
             })}
           </div>
-          <AceEditor
-            mode='javascript'
-            theme='twilight'
-            width='70%'
-            fontSize={16}
-            tabSize={2}
-            wrapEnabled
-            value={userCode}
-            onChange={
-              this.onChange.bind(this)
-            }
-            name='TREE_EDITOR'
-            editorProps={{ $blockScrolling: true }}
-            onLoad={
-              editor => {
-                editor.focus();
-                this.editor = editor.getSession();
-                this.editor.setUseWrapMode(true);
+          <div className={styles.editor}>
+            <AceEditor
+              mode='javascript'
+              theme='twilight'
+              width='100%'
+              fontSize={16}
+              tabSize={2}
+              wrapEnabled
+              value={userCode}
+              onChange={
+                this.onChange.bind(this)
               }
-            }
-          />
+              name='TREE_EDITOR'
+              editorProps={{ $blockScrolling: true }}
+              onLoad={
+                editor => {
+                  editor.focus();
+                  this.editor = editor.getSession();
+                  this.editor.setUseWrapMode(true);
+                }
+              }
+            />
+          </div>
         </div>
       </div>
     );
