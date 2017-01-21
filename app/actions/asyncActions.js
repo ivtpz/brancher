@@ -1,21 +1,13 @@
+import AsyncQueue from '../utils/asyncQueueStructures';
+
+let asyncQueue = new AsyncQueue();
+
 const endAsync = () => {
   return { type: 'ASYNC_INACTIVE' };
 };
 
-let queuedActions = 0;
-
 const callAsync = (dispatchFn, delay = 500, dispatchEnd, newState) => {
-  queuedActions++;
-  setTimeout(
-    () => {
-      queuedActions--;
-      dispatchFn(newState);
-      if (queuedActions === 0) {
-        dispatchEnd();
-      }
-    },
-    queuedActions * delay
-  );
+  asyncQueue.add(dispatchFn, delay, newState);
   return { type: 'ASYNC_ACTIVE' };
 };
 
