@@ -30,7 +30,9 @@ const verticalTreeData = (
   }
 };
 
-const undoableVerticalTreeData = undoable(verticalTreeData);
+const undoableVerticalTreeData = undoable(verticalTreeData, {
+  limit: 20
+});
 
 export default {
   verticalTreeData: undoableVerticalTreeData,
