@@ -7,7 +7,7 @@ const updateCode = newCode => {
 };
 
 const highlightNode = (delay, unHighlight, nodeId) => {
-  setTimeout(() => unHighlight(nodeId), delay - 30);
+  setTimeout(() => unHighlight(nodeId), delay / 1.1);
   return { type: 'HIGHLIGHT_NODE', nodeId };
 };
 
