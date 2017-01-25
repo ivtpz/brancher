@@ -6,6 +6,7 @@ import 'brace/mode/javascript';
 import 'brace/theme/twilight';
 import * as styles from './Home.scss';
 import Tree from './Tree';
+import PopOver from './PopOver';
 import { flatten, pause, mapConnections, highlight, augment } from '../utils/vertTreeUtils';
 import UndoRedoCreator from '../containers/UndoRedo';
 import AnimationSpeedSelector from '../components/AnimationSpeedSelector';
@@ -108,6 +109,16 @@ export default class VerticalTree extends Component {
         </div>
         <div className={styles.homeContainer}>
           <div className={styles.treeContainer}>
+            <PopOver
+              next={(i) => i}
+              position={0}
+              total={2}
+              xPos={'30%'}
+              yPos={'80px'}
+              active
+            >
+              <div>You can view a visual representation of your tree here</div>
+            </PopOver>
             {treeArray.map((treeLevel, index) => {
               return (
                 <div key={index} className={styles.levelContainer}>
