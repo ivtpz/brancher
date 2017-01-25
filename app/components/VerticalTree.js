@@ -10,6 +10,7 @@ import PopOver from './PopOver';
 import { flatten, pause, mapConnections, highlight, augment } from '../utils/vertTreeUtils';
 import UndoRedoCreator from '../containers/UndoRedo';
 import AnimationSpeedSelector from '../components/AnimationSpeedSelector';
+import Help from '../components/Help';
 
 const UndoRedo = UndoRedoCreator('verticalTreeData');
 
@@ -22,6 +23,7 @@ export default class VerticalTree extends Component {
 
   componentDidMount() {
     this.drawConnections();
+    this.props.setTutorialLength(3);
   }
 
   componentDidUpdate() {
@@ -58,6 +60,7 @@ export default class VerticalTree extends Component {
     const newDelay = Math.max(0, delay + change);
     setDelay(newDelay);
   }
+
 
   runCode() {
     const {
@@ -97,8 +100,39 @@ export default class VerticalTree extends Component {
     }
   }
 
+  popOverCreator(order, xPos, yPos, text) {
+    const {
+      viewNext,
+      viewPrevious,
+      tutorialActive,
+      currentlyDisplayedTutorial,
+      tutorialLength,
+      closeTutorial
+    } = this.props;
+    return (
+      <PopOver
+        next={viewNext}
+        previous={viewPrevious}
+        active={tutorialActive && currentlyDisplayedTutorial === order}
+        total={tutorialLength}
+        xPos={xPos}
+        yPos={yPos}
+        first={order === 1}
+        last={order === tutorialLength}
+        close={closeTutorial}
+      >
+        <div>{text}</div>
+      </PopOver>
+    );
+  }
+
   render() {
-    const { treeData, userCode, delay } = this.props;
+    const {
+      treeData,
+      userCode,
+      delay,
+      openTutorial
+    } = this.props;
     const treeArray = flatten(treeData.present).toJS();
     return (
       <div>
@@ -106,19 +140,11 @@ export default class VerticalTree extends Component {
           <UndoRedo />
           <AnimationSpeedSelector changeDelay={this.changeDelay.bind(this)} />
           <button onClick={this.runCode.bind(this)}>Run</button>
+          <Help activate={openTutorial} />
         </div>
         <div className={styles.homeContainer}>
           <div className={styles.treeContainer}>
-            <PopOver
-              next={(i) => i}
-              position={0}
-              total={2}
-              xPos={'30%'}
-              yPos={'80px'}
-              active
-            >
-              <div>You can view a visual representation of your tree here</div>
-            </PopOver>
+            {this.popOverCreator(1, '30%', '80px', 'You can view a visual representation of your tree here by clicking "Run"')}
             {treeArray.map((treeLevel, index) => {
               return (
                 <div key={index} className={styles.levelContainer}>
@@ -140,6 +166,8 @@ export default class VerticalTree extends Component {
             })}
           </div>
           <div className={styles.editor}>
+            {this.popOverCreator(2, '60%', '80px', 'The tree you see in the visualizer gets passed into this function as the argument "tree"')}
+            {this.popOverCreator(3, '75%', '80px', 'You also have access to the functions "pause", "highlight", and "augment"')}
             <AceEditor
               mode='javascript'
               theme='twilight'
