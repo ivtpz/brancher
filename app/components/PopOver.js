@@ -1,15 +1,20 @@
 import React from 'react';
 import * as styles from './PopOver.scss';
 
-const PopOver = ({ next, active, order, xPos, yPos, children }) => {
+const PopOver = ({ next, active, first, last, previous, xPos, yPos, children }) => {
   if (!active) {
     return null;
   }
+  const text = last ? 'End' : 'Next';
   return (
     <div className={styles.modal} style={{ top: yPos, left: xPos }}>
       {children}
       <div className={styles.footer}>
-        <button onClick={next.bind(null, order + 1)}>Next</button>
+        {first ?
+          <div /> :
+          <button onClick={previous}>Prev</button>
+        }
+        <button onClick={next}>{text}</button>
       </div>
     </div>
   );
