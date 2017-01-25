@@ -7,6 +7,9 @@ const endAsync = () => {
 };
 
 const callAsync = (dispatchFn, delay = 500, dispatchEnd, newState) => {
+  if (!asyncQueue.size) {
+    asyncQueue.listenForEnd(dispatchEnd);
+  }
   asyncQueue.add(dispatchFn, delay, newState);
   return { type: 'ASYNC_ACTIVE' };
 };
