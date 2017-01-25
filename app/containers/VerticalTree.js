@@ -9,7 +9,10 @@ function mapStateToProps(state) {
   return {
     treeData: state.verticalTreeData,
     userCode: state.userCode,
-    ...state.async
+    tutorialActive: state.tutorial.get('tutorialActive'),
+    tutorialLength: state.tutorial.get('totalPopUps'),
+    currentlyDisplayedTutorial: state.tutorial.get('current'),
+    ...state.async,
   };
 }
 
