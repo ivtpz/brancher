@@ -13,11 +13,11 @@ describe('Async Actions', function() {
 
   describe('Call Async', function() {
     it('Should return an object with type ASYNC_ACTIVE', function() {
-      expect(callAsync(()=>{}, 0, ()=>{}, {}).type).to.equal('ASYNC_ACTIVE')
+      expect(callAsync(()=>{}, 0, endAsyncSpy, {}).type).to.equal('ASYNC_ACTIVE')
     })
     before(function(done) {
-      callAsync(actionSpy, 200, () => {}, newState)
-      callAsync(actionSpy, 200, () => {}, newState)
+      callAsync(actionSpy, 200, endAsyncSpy, newState)
+      callAsync(actionSpy, 200, endAsyncSpy, newState)
       setTimeout(done, 300);
     })
     it('Should execute an action with passed in state after a delay', function() {
@@ -36,7 +36,7 @@ describe('Async Actions', function() {
           expect(endAsync().type).to.equal('ASYNC_INACTIVE')
         })
         //TODO: write asyncqueue as observable to alert end of queue
-        xit('Should execute endAsync action when queue is empty', function() {
+        it('Should execute the first endAsync action passed to call async when queue is empty', function() {
           expect(endAsyncSpy).to.have.been.calledOnce
         })
       })
