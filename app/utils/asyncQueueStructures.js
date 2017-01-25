@@ -39,6 +39,7 @@ class AsyncQueue {
     this._queue = new Queue();
     this.active = false;
     this.size = 0;
+    this._endListeners = new Queue();
   }
   add(action, delay, ...args) {
     this._queue.enqueue([action, delay, args]);
@@ -57,10 +58,21 @@ class AsyncQueue {
       let [action, delay, args] = this._queue.dequeue();
       if (this.size) {
         setTimeout(() => this.runQueue(), delay);
+        action.apply(action, args);
       } else {
+        action.apply(action, args);
+        let listener;
+        while (this._endListeners.getSize()) {
+          listener = this._endListeners.dequeue();
+          listener();
+        }
         this.active = false;
       }
-      action.apply(action, args);
+    }
+  }
+  listenForEnd(endFn) {
+    if (typeof endFn === 'function') {
+      this._endListeners.enqueue(endFn);
     }
   }
 }
