@@ -136,7 +136,7 @@ export default class VerticalTree extends Component {
     const treeArray = flatten(treeData.present).toJS();
     return (
       <div>
-        <div className={tutorialActive ? styles.backdrop : styles.hidden} onClick={closeTutorial}/>
+        <div className={tutorialActive ? styles.backdrop : styles.hidden} onClick={closeTutorial} />
         <div className={styles.header}>
           <UndoRedo />
           <AnimationSpeedSelector changeDelay={this.changeDelay.bind(this)} />
