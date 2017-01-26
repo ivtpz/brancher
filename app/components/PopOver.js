@@ -8,7 +8,9 @@ const PopOver = ({ next, active, first, last, previous, xPos, yPos, children }) 
   const text = last ? 'End' : 'Next';
   return (
     <div className={styles.modal} style={{ top: yPos, left: xPos }}>
-      {children}
+      <div className={styles.text}>
+        {children}
+      </div>
       <div className={styles.footer}>
         {first ?
           <div /> :
