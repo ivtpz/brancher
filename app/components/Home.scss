@@ -73,12 +73,58 @@
   display: none;
 }
 
+.animationSpeedContainer {
+  display: inherit;
+}
+
 .button_info {
   font-size: 18px;
   padding: 3px;
   color: grey;
 }
 
+.delaySpeed {
+  font-size: 18px;
+  padding-top: 5px;
+  width: 80px;
+  border-radius: 4px;
+  transition: all 0.3s ease 0s;
+  text-align: center;
+  text-shadow: 1px 1px grey;
+  color: gainsboro;
+}
+
+.lightning {
+  @extend .delaySpeed;
+  background-color: rgba(240, 17, 9, 0.7);
+}
+
+.fast {
+  @extend .delaySpeed;
+  color: white;
+  background-color: rgba(232, 133, 4, 0.7);
+}
+
+.normal {
+  @extend .delaySpeed;
+  text-shadow: 1px 1px slategray;
+  background-color:rgba(242, 210, 10, 0.8); 
+}
+
+.slow {
+  @extend .delaySpeed;
+  background-color: rgba(16, 89, 25, 0.7);
+}
+
+.turtle {
+  @extend .delaySpeed;
+  background-color: rgba(6, 75, 204, 0.7);
+}
+
+.molasses {
+  @extend .delaySpeed;
+  background-color: rgba(54, 15, 193, 0.7);
+}
 
 @mixin box-shadow($top, $left, $blur, $color, $inset: false) {
   @if $inset {
@@ -116,6 +162,18 @@ button {
   &:active {
     background-color: slategrey;
   }
+}
+
+.runButton {
+  @extend button;
+  background: radial-gradient(rgba(50, 150, 150, 0.6), rgba(50, 150, 150, 0.9));
+  color: white;
+  min-width: 60px;
+}
+
+.helpButton {
+  @extend .runButton;
+  background: radial-gradient(#4e8bed, #2c62ba);
 }
 
 .leftButtons {
