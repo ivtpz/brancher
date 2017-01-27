@@ -1,8 +1,9 @@
 import React from 'react';
+import * as styles from './Home.scss';
 
 const Help = ({ activate }) => {
   return (
-    <button onClick={activate}>Help</button>
+    <button className={styles.helpButton} onClick={activate}>Help</button>
   );
 };
 
