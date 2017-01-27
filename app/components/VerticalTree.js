@@ -18,12 +18,15 @@ export default class VerticalTree extends Component {
   constructor(props) {
     super(props);
     this.code = this.props.userCode;
-    this.connections = {};
   }
 
   componentDidMount() {
     this.drawConnections();
     this.props.setTutorialLength(21);
+    window.addEventListener('resize', (e) => {
+      e.preventDefault();
+      jsplumb.repaintEverything();
+    });
   }
 
   componentDidUpdate() {
@@ -38,10 +41,10 @@ export default class VerticalTree extends Component {
 
   drawConnections() {
     const treeArray = flatten(this.props.treeData.present).toJS();
-    this.connections = mapConnections(treeArray);
-    for (let parent in this.connections) {
-      if (this.connections.hasOwnProperty(parent)) {
-        this.connections[parent].forEach(child => {
+    const connections = mapConnections(treeArray);
+    for (let parent in connections) {
+      if (connections.hasOwnProperty(parent)) {
+        connections[parent].forEach(child => {
           jsplumb.connect({
             source: parent,
             target: child,
