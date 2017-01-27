@@ -39,6 +39,7 @@ app/bundle.js
 app/bundle.js.map
 app/style.css
 app/style.css.map
+app/LICENSES*
 dist
 main.js
 main.js.map
