@@ -32,7 +32,7 @@
   justify-content: space-between;
   align-items: flex-start;
   width: 95%;
-  margin-right: 40px;
+  margin-right: 10px;
 }
 
 .editor {
@@ -85,6 +85,7 @@
 
 .delaySpeed {
   font-size: 18px;
+  margin-left: 5px;
   padding-top: 5px;
   width: 80px;
   border-radius: 4px;
@@ -174,6 +175,15 @@ button {
 .helpButton {
   @extend .runButton;
   background: radial-gradient(#4e8bed, #2c62ba);
+  transition: all 0.5s ease 0s;
+}
+
+.highlighted {
+  @extend .runButton;
+  transition: all 0.5s ease 0s;
+  background: radial-gradient(#71a4f7, #4e8bed);
+  border: 2px solid grey;
+  @include box-shadow(0, 3px, 4px, rgba(0, 0, 0, 0.2));
 }
 
 .leftButtons {
