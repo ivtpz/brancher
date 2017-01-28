@@ -14,13 +14,6 @@ const viewPrevious = () => {
   return { type: 'VIEW_PREVIOUS' };
 };
 
-const setTutorialLength = (len) => {
-  return {
-    type: 'SET_LENGTH',
-    totalPopUps: len
-  };
-};
-
 const toggleHelpHighlight = () => {
   return { type: 'TOGGLE_HELP_HIGHLIGHT' };
 };
@@ -29,7 +22,6 @@ export default {
   openTutorial,
   closeTutorial,
   viewNext,
-  setTutorialLength,
   viewPrevious,
   toggleHelpHighlight
 };
