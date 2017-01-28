@@ -4,7 +4,6 @@ import { connect } from 'react-redux';
 import VerticalTree from '../components/VerticalTree';
 import * as verticalTreeActions from '../actions/verticalTreeActions';
 import * as asyncActions from '../actions/asyncActions';
-import * as tutorialActions from '../actions/tutorialActions';
 
 function mapStateToProps(state) {
   return {
