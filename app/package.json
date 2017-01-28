@@ -1,7 +1,7 @@
 {
   "name": "brancher",
   "productName": "brancher",
-  "version": "1.0.0",
+  "version": "0.0.2",
   "description": "Visualization tool for trees written in JavaScript",
   "main": "./main.js",
   "author": {
