@@ -28,6 +28,10 @@ export default class VerticalTree extends Component {
       e.preventDefault();
       jsplumb.repaintEverything();
     });
+    const highlightInterval = setInterval(() => {
+      this.props.toggleHelpHighlight();
+    }, 500);
+    setTimeout(() => clearInterval(highlightInterval), 3000);
   }
 
   componentDidUpdate() {
@@ -131,6 +135,7 @@ export default class VerticalTree extends Component {
     } = this.props;
     return (
       <PopOver
+        ket={order}
         next={viewNext}
         previous={viewPrevious}
         active={tutorialActive && currentlyDisplayedTutorial === order}
@@ -152,7 +157,8 @@ export default class VerticalTree extends Component {
       delay,
       openTutorial,
       closeTutorial,
-      tutorialActive
+      tutorialActive,
+      highlightHelp
     } = this.props;
     const treeArray = flatten(treeData.present).toJS();
     const speedText = this.getDelay();
@@ -174,7 +180,10 @@ export default class VerticalTree extends Component {
             >
             Run
             </button>
-            <Help activate={openTutorial} />
+            <Help
+              activate={openTutorial}
+              styleClass={highlightHelp ? styles.highlighted : styles.helpButton}
+            />
           </div>
         </div>
         <div className={styles.homeContainer}>
@@ -208,6 +217,7 @@ export default class VerticalTree extends Component {
               mode='javascript'
               theme='twilight'
               width='100%'
+              height='100%'
               fontSize={16}
               tabSize={2}
               wrapEnabled
