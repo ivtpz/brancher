@@ -97,7 +97,9 @@ export default class VerticalTree extends Component {
       treeData,
       userCode,
       delay,
-      theme
+      theme,
+      swapCode,
+      isBinaryTree
     } = this.props;
     const treeArray = flatten(treeData.present).toJS();
     return (
@@ -142,6 +144,7 @@ export default class VerticalTree extends Component {
               name='TREE_EDITOR'
               editorProps={{ $blockScrolling: true }}
               enableBasicAutocompletion
+              enableLiveAutocompletion
               onLoad={
                 editor => {
                   editor.focus();
@@ -150,21 +153,27 @@ export default class VerticalTree extends Component {
                 }
               }
             />
+            <button
+              className={styles.helpButton}
+              onClick={swapCode}
+            >
+              {isBinaryTree ? 'Switch to Tree' : 'Switch to Binary'}
+            </button>
           </div>
+          {tutorialWindows.map(helpBox => {
+            let { order, xPos, yPos, text } = helpBox;
+            return (
+              <PopOver
+                key={order}
+                order={order}
+                text={text}
+                xPos={xPos}
+                yPos={yPos}
+                totalLength={tutorialWindows.length}
+              />
+            );
+          })}
         </div>
-        {tutorialWindows.map(helpBox => {
-          let { order, xPos, yPos, text } = helpBox;
-          return (
-            <PopOver
-              key={order}
-              order={order}
-              text={text}
-              xPos={xPos}
-              yPos={yPos}
-              totalLength={tutorialWindows.length}
-            />
-          );
-        })}
       </div>
     );
   }
