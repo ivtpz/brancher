@@ -28,7 +28,9 @@ export default class Header extends Component {
       tutorialActive,
       closeTutorial,
       darkenTheme,
-      lightenTheme
+      lightenTheme,
+      themeIndex,
+      themeOptions
     } = this.props;
     const UndoRedo = UndoRedoCreator(dataType);
     const backdropClass = tutorialActive ? styles.backdrop : styles.hidden;
@@ -40,8 +42,16 @@ export default class Header extends Component {
         <AnimationSpeedSelector delay={delay} changeDelay={this.changeDelay.bind(this)} />
         <div>
           <span className={styles.button_info}>Editor Theme</span>
-          <button className={styles.darkerButton} onClick={darkenTheme}>Darker</button>
-          <button className={styles.lighterButton} onClick={lightenTheme}>Lighter</button>
+          <button
+            className={styles.darkerButton}
+            onClick={darkenTheme}
+            disabled={!themeIndex}
+          >Darker</button>
+          <button
+            className={styles.lighterButton}
+            onClick={lightenTheme}
+            disabled={themeIndex >= themeOptions - 1}
+          >Lighter</button>
         </div>
         <div className={styles.leftButtons} >
           <button className={styles.runButton} onClick={runCode}>Run</button>
