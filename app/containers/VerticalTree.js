@@ -10,10 +10,6 @@ function mapStateToProps(state) {
   return {
     treeData: state.verticalTreeData,
     userCode: state.userCode,
-    tutorialActive: state.tutorial.get('active'),
-    tutorialLength: state.tutorial.get('totalPopUps'),
-    currentlyDisplayedTutorial: state.tutorial.get('current'),
-    highlightHelp: state.tutorial.get('highlightHelp'),
     ...state.async,
   };
 }
@@ -23,7 +19,6 @@ function mapDispatchToProps(dispatch) {
     {
       ...verticalTreeActions,
       ...asyncActions,
-      ...tutorialActions
     }, dispatch);
 }
 
