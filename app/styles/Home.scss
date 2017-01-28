@@ -165,6 +165,15 @@ button {
   }
 }
 
+.darkerButton {
+  background: radial-gradient(#3c3f42, #242526);
+  color: white;
+}
+
+.lighterButton {
+  background: radial-gradient(ghostwhite, gainsboro);
+}
+
 .runButton {
   @extend button;
   background: radial-gradient(rgba(50, 150, 150, 0.6), rgba(50, 150, 150, 0.9));

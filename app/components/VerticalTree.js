@@ -3,8 +3,13 @@ import AceEditor from 'react-ace';
 import jsplumb from 'jsplumb';
 import brace from 'brace'; // eslint-disable-line no-unused-vars
 import 'brace/mode/javascript';
-import 'brace/theme/twilight';
-import * as styles from './Home.scss';
+import 'brace/theme/monokai';
+import 'brace/theme/tomorrow_night_eighties';
+import 'brace/theme/tomorrow_night_blue';
+import 'brace/theme/kuroir';
+import 'brace/theme/katzenmilch';
+import 'brace/theme/chrome';
+import * as styles from '../styles/Home.scss';
 import Tree from './Tree';
 import PopOver from '../containers/PopOver';
 import { flatten, pause, mapConnections, highlight, augment } from '../utils/vertTreeUtils';
@@ -91,7 +96,8 @@ export default class VerticalTree extends Component {
     const {
       treeData,
       userCode,
-      delay
+      delay,
+      theme
     } = this.props;
     const treeArray = flatten(treeData.present).toJS();
     return (
@@ -125,7 +131,7 @@ export default class VerticalTree extends Component {
           <div className={styles.editor}>
             <AceEditor
               mode='javascript'
-              theme='twilight'
+              theme={theme}
               width='100%'
               height='100%'
               fontSize={16}
@@ -135,11 +141,12 @@ export default class VerticalTree extends Component {
               onChange={this.onChange.bind(this)}
               name='TREE_EDITOR'
               editorProps={{ $blockScrolling: true }}
+              enableBasicAutocompletion
               onLoad={
                 editor => {
                   editor.focus();
-                  this.editor = editor.getSession();
-                  this.editor.setUseWrapMode(true);
+                  const session = editor.getSession();
+                  session.setUseWrapMode(true);
                 }
               }
             />

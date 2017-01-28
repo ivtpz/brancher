@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import AnimationSpeedSelector from './AnimationSpeedSelector';
 import UndoRedoCreator from '../containers/UndoRedo';
-import * as styles from './Home.scss';
+import * as styles from '../styles/Home.scss';
 
 export default class Header extends Component {
 
@@ -26,7 +26,9 @@ export default class Header extends Component {
       openTutorial,
       highlightHelp,
       tutorialActive,
-      closeTutorial
+      closeTutorial,
+      darkenTheme,
+      lightenTheme
     } = this.props;
     const UndoRedo = UndoRedoCreator(dataType);
     const backdropClass = tutorialActive ? styles.backdrop : styles.hidden;
@@ -36,6 +38,11 @@ export default class Header extends Component {
         <div className={backdropClass} onClick={closeTutorial} />
         <UndoRedo />
         <AnimationSpeedSelector delay={delay} changeDelay={this.changeDelay.bind(this)} />
+        <div>
+          <span className={styles.button_info}>Editor Theme</span>
+          <button className={styles.darkerButton} onClick={darkenTheme}>Darker</button>
+          <button className={styles.lighterButton} onClick={lightenTheme}>Lighter</button>
+        </div>
         <div className={styles.leftButtons} >
           <button className={styles.runButton} onClick={runCode}>Run</button>
           <button className={helpClass} onClick={openTutorial}>Help</button>

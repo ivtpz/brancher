@@ -1,6 +1,15 @@
 /* eslint-disable */
-const userCode = (state=
-`function (tree, pause, highlight, augment) {
+const themes = [
+  'monokai',
+  'tomorrow_night_eighties',
+  'tomorrow_night_blue',
+  'kuroir',
+  'katzenmilch',
+  'chrome'
+]
+
+const userCode = (state = {
+userCode: `function (tree, pause, highlight, augment) {
   class Node {
     constructor(value) {
       this.value = value;
@@ -26,10 +35,29 @@ const userCode = (state=
   pause(newTree);
   newTree.add(3);
   return newTree;
-}`, action) => {
+}`,
+themeIndex: 0,
+theme: themes[0],
+themeOptions: themes.length
+}, action) => {
+  let newIndex;
   switch (action.type) {
     case 'UPDATE_CODE':
-      return action.newCode
+      return {...state, userCode: action.newCode };
+    case 'DARKEN_THEME':
+      newIndex = Math.max(0, state.themeIndex - 1)
+      return {
+        ...state, 
+        themeIndex: newIndex,
+        theme: themes[newIndex]
+      };
+    case 'LIGHTEN_THEME':
+      newIndex = Math.min(state.themeOptions - 1, state.themeIndex + 1)
+      return {
+        ...state, 
+        themeIndex: newIndex,
+        theme: themes[newIndex]
+      };
     default:
       return state;
   }
