@@ -13,6 +13,7 @@ function mapStateToProps(state) {
     tutorialActive: state.tutorial.get('active'),
     tutorialLength: state.tutorial.get('totalPopUps'),
     currentlyDisplayedTutorial: state.tutorial.get('current'),
+    highlightHelp: state.tutorial.get('highlightHelp'),
     ...state.async,
   };
 }
