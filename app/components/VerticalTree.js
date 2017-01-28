@@ -6,32 +6,19 @@ import 'brace/mode/javascript';
 import 'brace/theme/twilight';
 import * as styles from './Home.scss';
 import Tree from './Tree';
-import PopOver from './PopOver';
+import PopOver from '../containers/PopOver';
 import { flatten, pause, mapConnections, highlight, augment } from '../utils/vertTreeUtils';
-import UndoRedoCreator from '../containers/UndoRedo';
-import AnimationSpeedSelector from '../components/AnimationSpeedSelector';
-import Help from '../components/Help';
 import tutorialWindows from '../tutorial/treeTutorial';
-
-const UndoRedo = UndoRedoCreator('verticalTreeData');
+import Header from '../containers/Header';
 
 export default class VerticalTree extends Component {
-  constructor(props) {
-    super(props);
-    this.code = this.props.userCode;
-  }
 
   componentDidMount() {
     this.drawConnections();
-    this.props.setTutorialLength(tutorialWindows.length + 1);
     window.addEventListener('resize', (e) => {
       e.preventDefault();
       jsplumb.repaintEverything();
     });
-    const highlightInterval = setInterval(() => {
-      this.props.toggleHelpHighlight();
-    }, 500);
-    setTimeout(() => clearInterval(highlightInterval), 3000);
   }
 
   componentDidUpdate() {
@@ -41,24 +28,7 @@ export default class VerticalTree extends Component {
   }
 
   onChange(newVal) {
-    this.code = newVal;
-  }
-
-  getDelay() {
-    let delay = this.props.delay;
-    if (delay <= 100) {
-      return 'Lightning';
-    } else if (delay <= 300) {
-      return 'Fast';
-    } else if (delay <= 500) {
-      return 'Normal';
-    } else if (delay <= 700) {
-      return 'Slow';
-    } else if (delay <= 900) {
-      return 'Turtle';
-    } else {
-      return 'Molasses';
-    }
+    this.props.updateCode(newVal);
   }
 
   drawConnections() {
@@ -80,13 +50,6 @@ export default class VerticalTree extends Component {
     }
   }
 
-  changeDelay(change) {
-    const { delay, setDelay } = this.props;
-    const newDelay = Math.max(0, delay + change);
-    setDelay(newDelay);
-  }
-
-
   runCode() {
     const {
       updateStructure,
@@ -94,9 +57,9 @@ export default class VerticalTree extends Component {
       callAsync,
       endAsync,
       delay,
-      updateCode,
       highlightNode,
-      unHighlightNode
+      unHighlightNode,
+      userCode
     } = this.props;
     const asyncUpdateStructure = callAsync.bind(
       null,
@@ -113,8 +76,7 @@ export default class VerticalTree extends Component {
     const treeJSON = treeData.present.toJS()[0];
     const applyChangeToStore = pause.bind(this, asyncUpdateStructure);
     const applyHighlight = highlight.bind(this, timedHighlight);
-    updateCode(this.code);
-    const newTree = eval(`(${this.code})`)(
+    const newTree = eval(`(${userCode})`)(
       treeJSON,
       applyChangeToStore,
       applyHighlight,
@@ -125,72 +87,20 @@ export default class VerticalTree extends Component {
     }
   }
 
-  popOverCreator(order, xPos, yPos, text) {
-    const {
-      viewNext,
-      viewPrevious,
-      tutorialActive,
-      currentlyDisplayedTutorial,
-      tutorialLength
-    } = this.props;
-    return (
-      <PopOver
-        ket={order}
-        next={viewNext}
-        previous={viewPrevious}
-        active={tutorialActive && currentlyDisplayedTutorial === order}
-        total={tutorialLength}
-        xPos={xPos}
-        yPos={yPos}
-        first={order === 1}
-        last={order === tutorialLength}
-      >
-        <div>{text}</div>
-      </PopOver>
-    );
-  }
-
   render() {
     const {
       treeData,
       userCode,
-      delay,
-      openTutorial,
-      closeTutorial,
-      tutorialActive,
-      highlightHelp
+      delay
     } = this.props;
     const treeArray = flatten(treeData.present).toJS();
-    const speedText = this.getDelay();
     return (
       <div>
-        <div className={tutorialActive ? styles.backdrop : styles.hidden} onClick={closeTutorial} />
-        <div className={styles.header}>
-          <UndoRedo />
-          <div className={styles.animationSpeedContainer}>
-            <AnimationSpeedSelector changeDelay={this.changeDelay.bind(this)} />
-            <div className={styles[speedText.toLowerCase()]}>
-              {speedText}
-            </div>
-          </div>
-          <div className={styles.leftButtons} >
-            <button
-              className={styles.runButton}
-              onClick={this.runCode.bind(this)}
-            >
-            Run
-            </button>
-            <Help
-              activate={openTutorial}
-              styleClass={highlightHelp ? styles.highlighted : styles.helpButton}
-            />
-          </div>
-        </div>
+        <Header
+          dataType='verticalTreeData'
+          runCode={this.runCode.bind(this)}
+        />
         <div className={styles.homeContainer}>
-          {tutorialWindows.map(helpBox => {
-            let { order, xPos, yPos, text } = helpBox;
-            return this.popOverCreator(order, xPos, yPos, text);
-          })}
           <div className={styles.treeContainer}>
             {treeArray.map((treeLevel, index) => {
               return (
@@ -235,6 +145,19 @@ export default class VerticalTree extends Component {
             />
           </div>
         </div>
+        {tutorialWindows.map(helpBox => {
+          let { order, xPos, yPos, text } = helpBox;
+          return (
+            <PopOver
+              key={order}
+              order={order}
+              text={text}
+              xPos={xPos}
+              yPos={yPos}
+              totalLength={tutorialWindows.length}
+            />
+          );
+        })}
       </div>
     );
   }
