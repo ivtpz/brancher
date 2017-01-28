@@ -9,7 +9,9 @@ import * as userCodeActions from '../actions/userCodeActions';
 function mapStateToProps(state) {
   return {
     treeData: state.verticalTreeData,
-    ...state.userCode,
+    theme: state.userCode.theme,
+    userCode: state.userCode.userCode,
+    isBinaryTree: state.userCode.binary,
     ...state.async,
   };
 }
