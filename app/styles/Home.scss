@@ -38,6 +38,9 @@
 .editor {
   width: 70%;
   min-width: 500px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
 }
 
 .levelContainer {
