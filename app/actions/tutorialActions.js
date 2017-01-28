@@ -21,10 +21,15 @@ const setTutorialLength = (len) => {
   };
 };
 
+const toggleHelpHighlight = () => {
+  return { type: 'TOGGLE_HELP_HIGHLIGHT' };
+};
+
 export default {
   openTutorial,
   closeTutorial,
   viewNext,
   setTutorialLength,
-  viewPrevious
+  viewPrevious,
+  toggleHelpHighlight
 };
