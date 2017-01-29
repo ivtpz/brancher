@@ -6,8 +6,8 @@ class Node {
     this.children = [];
     this._id = id || Math.floor(Math.random() * 10000);
   }
-  _add(value, index) {
-    this.children[index] = new Node(value);
+  _add(value, index, id) {
+    this.children[index] = new Node(value, id);
   }
 }
 
@@ -91,14 +91,14 @@ const convertToImmutable = tree => {
 
 const convertFromBinary = (tree, newTree = new Node(tree.value)) => {
   if (tree.left) {
-    newTree._add(tree.left.value, 0);
+    newTree._add(tree.left.value, 0, tree.left._id);
     convertFromBinary(tree.left, newTree.children[0]);
     if (!tree.right) {
       newTree._add(undefined, 1);
     }
   }
   if (tree.right) {
-    newTree._add(tree.right.value, 1);
+    newTree._add(tree.right.value, 1, tree.right._id);
     convertFromBinary(tree.right, newTree.children[1]);
     if (!tree.left) {
       newTree._add(undefined, 0);
@@ -135,7 +135,7 @@ const highlight = (action, node) => {
   }
 };
 
-const augment = (tree, UserClass) => {
+const augment = (tree, UserClass, addFn) => {
   let testNode = new UserClass(1);
   if (!testNode.hasOwnProperty('value' || testNode.value !== 1)) {
     alert('Constructor must accept a value, and assign it to key "value" on returned object');
@@ -143,32 +143,33 @@ const augment = (tree, UserClass) => {
   }
   // TODO: add more validation tests on userClass
   if (testNode.hasOwnProperty('left') && testNode.hasOwnProperty('right')) {
-    return extendBinaryNode(tree, UserClass);
+    return extendBinaryNode(tree, UserClass, addFn);
   } else {
-    return extendNode(tree, UserClass);
+    return extendNode(tree, UserClass, addFn);
   }
 };
 
-const extendNode = (node, UC) => {
-  let extendedTree = new UC(node.value);
-  extendedTree._id = node._id;
-  let extendedChild;
-  node.children.forEach(child => {
-    extendedChild = extendNode(child, UC);
-    extendedTree.children.push(extendedChild);
+const extendNode = (node, UC, addFn = 'add', extendedTree) => {
+  extendedTree = extendedTree || new UC(node.value); // eslint-disable-line
+  extendedTree._id = node._id; // eslint-disable-line
+  node.children.forEach((child, i) => {
+    extendedTree[addFn](child.value);
+    extendNode(child, UC, addFn, extendedTree.children[i]);
   });
   return extendedTree;
 };
 
-const extendBinaryNode = (node, UC) => {
-  let extendedTree = new UC(node.value);
-  extendedTree._id = node._id;
+const extendBinaryNode = (node, UC, addFn = 'add', extendedTree) => {
+  extendedTree = extendedTree || new UC(node.value); // eslint-disable-line
+  extendedTree._id = node._id; // eslint-disable-line
   if (node.children.length) {
     if (node.children[0] && node.children[0].value !== undefined) {
-      extendedTree.left = extendBinaryNode(node.children[0], UC);
+      extendedTree[addFn](node.children[0].value);
+      extendBinaryNode(node.children[0], UC, addFn, extendedTree.left);
     }
     if (node.children[1] && node.children[1].value !== undefined) {
-      extendedTree.right = extendBinaryNode(node.children[1], UC);
+      extendedTree[addFn](node.children[1].value);
+      extendBinaryNode(node.children[1], UC, addFn, extendedTree.right);
     }
   }
   return extendedTree;

@@ -31,7 +31,7 @@ const verticalTreeData = (
 };
 
 const undoableVerticalTreeData = undoable(verticalTreeData, {
-  limit: 20
+  limit: 12
 });
 
 export default {

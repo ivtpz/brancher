@@ -53,69 +53,74 @@ const tutorialWindows = [{
   order: 11, 
   xPos: '72%', 
   yPos: '395px', 
-  text: 'Now you can call the methods defined on "Node" on the passed in tree object.'
+  text: 'Note: You must have an add method defined on your "Node" class in order for "augment" to work.'
 }, {
   order: 12, 
+  xPos: '72%', 
+  yPos: '395px', 
+  text: 'Now you can call the methods defined on "Node" on the passed in tree object.'
+}, {
+  order: 13, 
   xPos: '72%', 
   yPos: '280px',
   text: 'When traverse gets called, it passes each node to highlight in order.'
 }, {
-  order: 13, 
+  order: 14, 
   xPos: '72%', 
   yPos: '280px', 
   text: 'Highlight will cause whatever node it is passed to turn red temporarily.'
 }, {
-  order: 14, 
+  order: 15, 
   xPos: '72%', 
   yPos: '280px',
   text: 'This allows you to see the order that a function traverses through your tree.'
 }, {
-  order: 15, 
+  order: 16, 
   xPos: '70%', 
   yPos: '445px', 
   text: 'The pause function takes in a tree, and puts it onto the visualizer temporarily.'
 }, {
-  order: 16, 
+  order: 17, 
   xPos: '70%', 
   yPos: '445px', 
   text: 'By calling pause and passing it "newTree" we can see the tree in-between adding nodes.'
 }, {
-  order: 17, 
+  order: 18, 
   xPos: '48%', 
   yPos: '70px', 
   text: 'You can control the speed of animation for highlighting and viewing tree states here.'
 }, {
-  order: 18, 
+  order: 19, 
   xPos: '48%', 
   yPos: '70px', 
   text: 'Warning: calling highlight on a large tree (30+ nodes) can run slowly.'
 }, {
-  order: 19, 
+  order: 20, 
   xPos: '10%', 
   yPos: '80px', 
-  text: 'You can also move backwards and forwards through your visualizations here, up to 20 steps'
+  text: 'You can also move backwards and forwards through your visualizations here, up to 12 steps'
 }, {
-  order: 20, 
+  order: 21, 
   xPos: '68%', 
   yPos: '515px', 
   text: 'Finally, you should return a tree from this function. Whatever you return will end up in the visualizer.'
 }, {
-  order: 21, 
+  order: 22, 
   xPos: '68%', 
   yPos: '300px', 
   text: 'Edit the code to create your own tree...'
 }, {
-  order: 22, 
+  order: 23, 
   xPos: '83%', 
   yPos: '70px', 
   text: '...then click "Run" to see it in action.'
 }, {
-  order: 23, 
+  order: 24, 
   xPos: '65%', 
   yPos: '450px', 
   text: 'As an initial challenge, try to add more nodes to "newTree"...'
 }, {
-  order: 24, 
+  order: 25, 
   xPos: '68%', 
   yPos: '300px', 
   text: '...then refactor traverse to do a Breadth First traversal of the tree.'
