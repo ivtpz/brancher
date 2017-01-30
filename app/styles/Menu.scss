@@ -1,0 +1,54 @@
+$fa-font-path: "font-awesome/fonts";
+@import "~font-awesome/scss/font-awesome";
+
+body {
+  margin: 0px;
+}
+
+a {
+  text-decoration: none;
+}
+
+.pageContainer {
+  background:
+    url('../assets/brancherTree.png'),
+    linear-gradient(45deg, rgba(0, 216, 255, .5) 10%, rgba(0, 1, 127, .7));
+  background-repeat: no-repeat;
+  background-position: center top;
+  width: 100vw;
+  height: 100vh;
+}
+
+.menuContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  padding-top: 10%;
+}
+
+.title {
+  font-size: 7em;
+  font-family: 'Helvetica Neue';
+  font-weight: bold;
+  color: #b7b7b7;
+  text-shadow: 3px 3px rgba(0, 0, 0, 0.7);
+  margin-bottom: 40px;
+}
+
+.menuLinkContainer {
+  @extend .menuContainer;
+  padding: 5px;
+  border-radius: 5px;
+  background-color: rgba(0, 0, 0, 0.6);
+}
+
+.menuLink {
+  font-size: 3em;
+  color: white;
+  text-align: center;
+  width: 280px;
+  &:hover {
+    background-color: rgba(0, 0, 0, 0.8);
+  }
+}
