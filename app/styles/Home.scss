@@ -31,8 +31,9 @@
   flex-direction: row;
   justify-content: space-between;
   align-items: flex-start;
-  width: 95%;
-  margin-right: 10px;
+  width: 100%;
+  padding: 5px;
+  border-bottom: 1px solid gainsboro;
 }
 
 .editor {
@@ -170,11 +171,24 @@ button {
 
 .darkerButton {
   background: radial-gradient(#3c3f42, #242526);
+  border: 2px solid #adadad;
   color: white;
+  &:hover:enabled {
+    border: 2px solid #474747;
+  }
+  &:hover:disabled {
+    border: 2px solid #adadad;
+  }
+  &:disabled {
+    color: gainsboro;
+  }
 }
 
 .lighterButton {
   background: radial-gradient(ghostwhite, gainsboro);
+  &:hover:enabled {
+    border: 2px solid #adadad;
+  }
 }
 
 .runButton {
@@ -202,7 +216,15 @@ button {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  width: 100px;
+  padding-right: 5px;
 }
 
+.userInput input {
+  width: 40px;
+  height: 25px;
+  margin-right: 5px;
+}
 
+.userInput {
+  padding-right: 5px;
+}
