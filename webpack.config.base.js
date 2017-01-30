@@ -26,8 +26,20 @@ export default validate({
         'style-loader?insertAt=top',
         'css-loader?modules&-autoprefixer&importLoaders=1&localIdentName=rst__[local]',
         'postcss-loader',
-        'sass-loader',
+        'sass-loader?includePaths[]='+ path.resolve(__dirname, 'node_modules'),
       ]
+    }, {
+      test: /\.(png|jpg)$/,
+      loader: 'url-loader'
+    }, {
+      test: /\.woff(\?v=\d+\.\d+\.\d+)?$/,
+      loader: "file-loader?mimetype=application/font-woff"
+    }, { 
+      test: /\.woff2(\?v=[0-9]\.[0-9]\.[0-9])?$/,
+      loader: "url-loader?limit=10000&mimetype=application/font-woff"
+    }, { 
+      test: /\.(ttf|eot|svg)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
+      loader: "file-loader"
     }]
   },
 
