@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router';
 import AceEditor from 'react-ace';
 import jsplumb from 'jsplumb';
 import brace from 'brace'; // eslint-disable-line no-unused-vars
@@ -17,19 +18,28 @@ import tutorialWindows from '../tutorial/treeTutorial';
 import Header from '../containers/Header';
 
 export default class VerticalTree extends Component {
+  constructor(props) {
+    super(props);
+    this.jsplumb = null;
+  }
 
   componentDidMount() {
+    this.jsplumb = jsplumb.getInstance();
     this.drawConnections();
     window.addEventListener('resize', (e) => {
       e.preventDefault();
-      jsplumb.repaintEverything();
+      this.jsplumb.repaintEverything();
     });
   }
 
   componentDidUpdate() {
-    jsplumb.detachEveryConnection();
-    jsplumb.deleteEveryEndpoint();
+    this.jsplumb.detachEveryConnection();
+    this.jsplumb.deleteEveryEndpoint();
     this.drawConnections();
+  }
+
+  componentWillUnmount() {
+    this.jsplumb.reset();
   }
 
   onChange(newVal) {
@@ -42,7 +52,7 @@ export default class VerticalTree extends Component {
     for (let parent in connections) {
       if (connections.hasOwnProperty(parent)) {
         connections[parent].forEach(child => {
-          jsplumb.connect({
+          this.jsplumb.connect({
             source: parent,
             target: child,
             anchor: ['Perimeter', { shape: 'Circle', anchorCount: 180 }],
@@ -107,6 +117,7 @@ export default class VerticalTree extends Component {
         <Header
           dataType='verticalTreeData'
           runCode={this.runCode.bind(this)}
+          headerType='code'
         />
         <div className={styles.homeContainer}>
           <div className={styles.treeContainer}>
@@ -153,6 +164,7 @@ export default class VerticalTree extends Component {
                 }
               }
             />
+            <Link to="/">Main Menu</Link>
             <button
               className={styles.helpButton}
               onClick={swapCode}
