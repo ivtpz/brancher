@@ -21,7 +21,7 @@ const AnimationSpeedSelector = ({ changeDelay, delay }) => {
   return (
     <div className={styles.animationSpeedContainer}>
       <div>
-        <span className={styles.button_info}>Animation Speed</span>
+        <span className={styles.button_info}>Speed</span>
         <button onClick={changeDelay.bind(this, -100)}>+</button>
         <button onClick={changeDelay.bind(this, 100)}>-</button>
       </div>
