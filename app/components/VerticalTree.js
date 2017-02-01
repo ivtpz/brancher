@@ -70,24 +70,11 @@ export default class VerticalTree extends Component {
       updateStructure,
       treeData,
       callAsync,
-      endAsync,
-      delay,
       highlightNode,
-      unHighlightNode,
       userCode
     } = this.props;
-    const asyncUpdateStructure = callAsync.bind(
-      null,
-      updateStructure,
-      delay,
-      endAsync
-    );
-    const timedHighlight = callAsync.bind(
-      null,
-      highlightNode.bind(null, delay, unHighlightNode),
-      delay,
-      endAsync
-    );
+    const asyncUpdateStructure = callAsync.bind(null, updateStructure);
+    const timedHighlight = callAsync.bind(null, highlightNode);
     const treeJSON = treeData.present.toJS()[0];
     const applyChangeToStore = pause.bind(this, asyncUpdateStructure);
     const applyHighlight = highlight.bind(this, timedHighlight);
