@@ -58,7 +58,7 @@ export default class Header extends Component {
               onClick={lightenTheme}
               disabled={themeIndex >= themeOptions - 1}
             >Lighter</button>
-          </div>) : <UserAction buttonAction={execute}/>
+          </div>) : <UserAction buttonAction={execute} />
         }
         {headerType === 'code' ?
           <div className={styles.leftButtons} >
