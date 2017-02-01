@@ -12,7 +12,7 @@ import 'brace/theme/chrome';
 import * as styles from '../styles/Home.scss';
 import PopOver from '../containers/PopOver';
 import Visualizer from './Visualizer';
-import { flatten, pause, mapConnections, highlight, augment } from '../utils/vertTreeUtils';
+import { flatten, pause, highlight, augment } from '../utils/vertTreeUtils';
 import tutorialWindows from '../tutorial/treeTutorial';
 import Header from '../containers/Header';
 
@@ -64,7 +64,7 @@ export default class VerticalTree extends Component {
           headerType='code'
         />
         <div className={styles.homeContainer}>
-          <Visualizer 
+          <Visualizer
             treeArray={treeArray}
             delay={delay}
           />

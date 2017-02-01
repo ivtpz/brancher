@@ -2,9 +2,8 @@ import React, { Component } from 'react';
 import { Link } from 'react-router';
 import Header from '../containers/Header';
 import Visualizer from './Visualizer';
-import { flatten, augment, pause, highlight, mapConnections } from '../utils/vertTreeUtils';
+import { flatten, augment, pause, highlight } from '../utils/vertTreeUtils';
 import * as structures from '../utils/TreeStructures';
-import * as styles from '../styles/Home.scss';
 
 export default class ExampleTree extends Component {
   constructor(props) {
