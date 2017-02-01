@@ -9,8 +9,8 @@ export default class Menu extends Component {
         <div className={styles.menuContainer}>
           <div className={styles.menuCircle}>
             <div className={styles.title}>Brancher</div>
-             <Link to='/usertree'><div className={styles.menuLink}>Write Code</div></Link>
-             <Link to='/treeExamples'><div className={styles.menuLink}>See Examples</div></Link>
+            <Link to='/usertree'><div className={styles.menuLink}>Write Code</div></Link>
+            <Link to='/treeExamples'><div className={styles.menuLink}>See Examples</div></Link>
           </div>
         </div>
       </div>
