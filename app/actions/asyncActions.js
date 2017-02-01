@@ -2,16 +2,16 @@ import AsyncQueue from '../utils/asyncQueueStructures';
 
 let asyncQueue = new AsyncQueue();
 
-const endAsync = () => {
-  return { type: 'ASYNC_INACTIVE' };
-};
+const endAsync = () => ({ type: 'ASYNC_INACTIVE' });
 
-const callAsync = (dispatchFn, delay = 500, dispatchEnd, newState) => {
+const startAsync = () => ({ type: 'ASYNC_ACTIVE' });
+
+const callAsync = (dispatchFn, newState) => (dispatch, getState) => {
   if (!asyncQueue.size) {
-    asyncQueue.listenForEnd(dispatchEnd);
+    asyncQueue.listenForEnd(dispatch.bind(null, endAsync));
   }
-  asyncQueue.add(dispatchFn, delay, newState);
-  return { type: 'ASYNC_ACTIVE' };
+  asyncQueue.add(dispatchFn, getState().async.delay, newState);
+  dispatch(startAsync());
 };
 
 const setDelay = (newDelay) => {
@@ -24,5 +24,6 @@ const setDelay = (newDelay) => {
 export default {
   callAsync,
   endAsync,
-  setDelay
+  setDelay,
+  startAsync
 };
