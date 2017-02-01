@@ -7,10 +7,12 @@ import * as styles from '../styles/Home.scss';
 export default class Header extends Component {
 
   componentDidMount() {
-    const highlightInterval = setInterval(() => {
-      this.props.toggleHelpHighlight();
-    }, 500);
-    setTimeout(() => clearInterval(highlightInterval), 3000);
+    if (this.props.headerType === 'code') {
+      const highlightInterval = setInterval(() => {
+        this.props.toggleHelpHighlight();
+      }, 500);
+      setTimeout(() => clearInterval(highlightInterval), 3000);
+    }
   }
 
   changeDelay(change) {
@@ -32,7 +34,8 @@ export default class Header extends Component {
       lightenTheme,
       themeIndex,
       themeOptions,
-      headerType
+      headerType,
+      execute
     } = this.props;
     const UndoRedo = UndoRedoCreator(dataType);
     const backdropClass = tutorialActive ? styles.backdrop : styles.hidden;
@@ -55,7 +58,7 @@ export default class Header extends Component {
               onClick={lightenTheme}
               disabled={themeIndex >= themeOptions - 1}
             >Lighter</button>
-          </div>) : (<UserAction />)
+          </div>) : <UserAction buttonAction={execute}/>
         }
         {headerType === 'code' ?
           <div className={styles.leftButtons} >

@@ -1,6 +1,11 @@
 $fa-font-path: "font-awesome/fonts";
 @import "~font-awesome/scss/font-awesome";
 
+@font-face {
+  font-family: 'Lobster';
+  src: url('../fonts/Lobster_1.3.otf');
+}
+
 body {
   margin: 0px;
 }
@@ -12,7 +17,7 @@ a {
 .pageContainer {
   background:
     url('../assets/brancherTree.png'),
-    linear-gradient(45deg, rgba(0, 216, 255, .5) 10%, rgba(0, 1, 127, .7));
+    linear-gradient(45deg, rgba(0, 150, 200, .5) 10%, rgba(0, 1, 150, .7));
   background-repeat: no-repeat;
   background-position: center top;
   width: 100vw;
@@ -22,33 +27,38 @@ a {
 .menuContainer {
   display: flex;
   flex-direction: column;
-  justify-content: space-around;
+  justify-content: flex-start;
   align-items: center;
-  padding-top: 10%;
+}
+
+.menuCircle {
+  @extend .menuContainer;
+  margin-top: 110px;
+  background-color: rgba(0, 0, 0, 0.6);
+  border-radius: 50%;
+  width: 400px;
+  height: 400px;
 }
 
 .title {
-  font-size: 7em;
-  font-family: 'Helvetica Neue';
-  font-weight: bold;
-  color: #b7b7b7;
-  text-shadow: 3px 3px rgba(0, 0, 0, 0.7);
+  font-size: 6.8em;
+  font-family: 'Lobster';
+  color: white;
+  text-shadow: 4px 4px rgba(0, 0, 0, 0.6);
   margin-bottom: 40px;
-}
-
-.menuLinkContainer {
-  @extend .menuContainer;
-  padding: 5px;
-  border-radius: 5px;
-  background-color: rgba(0, 0, 0, 0.6);
+  margin-top: 80px;
 }
 
 .menuLink {
-  font-size: 3em;
-  color: white;
+  font-family: 'Lobster';
+  font-size: 2.5em;
+  color: gainsboro;
   text-align: center;
-  width: 280px;
+  padding-top: 5px;
+  transition: all 0.1s ease 0s;
+  width: 260px;
   &:hover {
     background-color: rgba(0, 0, 0, 0.8);
+    color: white;
   }
 }

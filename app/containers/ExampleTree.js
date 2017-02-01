@@ -1,7 +1,7 @@
 // @flow
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import AVLTree from '../components/AVLTree';
+import ExampleTree from '../components/ExampleTree';
 import * as verticalTreeActions from '../actions/verticalTreeActions';
 import * as asyncActions from '../actions/asyncActions';
 
@@ -20,4 +20,4 @@ function mapDispatchToProps(dispatch) {
     }, dispatch);
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(AVLTree);
+export default connect(mapStateToProps, mapDispatchToProps)(ExampleTree);

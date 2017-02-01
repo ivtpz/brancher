@@ -3,7 +3,7 @@ import { fromJS } from 'immutable';
 import { findPathByNodeId } from '../utils/vertTreeUtils';
 
 const verticalTreeData = (
-  state = fromJS([{ value: '1', children: [], _id: 1000 }]),
+  state = fromJS([{ value: 1, children: [{ value: 2, children: [], _id: 2000 }], _id: 1000 }]),
   action
 ) => {
   let path = findPathByNodeId(action.nodeId, state);

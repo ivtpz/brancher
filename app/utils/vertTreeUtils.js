@@ -137,6 +137,10 @@ const highlight = (action, node) => {
 
 const augment = (tree, UserClass, addFn) => {
   let testNode = new UserClass(1);
+  console.log(testNode)
+  if (testNode.hasOwnProperty('root')) {
+    testNode = testNode.root;
+  }
   if (!testNode.hasOwnProperty('value' || testNode.value !== 1)) {
     alert('Constructor must accept a value, and assign it to key "value" on returned object');
     return;
@@ -164,6 +168,8 @@ const extendBinaryNode = (node, UC, addFn = 'add', extendedTree) => {
   extendedTree._id = node._id; // eslint-disable-line
   if (node.children.length) {
     if (node.children[0] && node.children[0].value !== undefined) {
+      console.log(new UC(2))
+      console.log(extendedTree)
       extendedTree[addFn](node.children[0].value);
       extendBinaryNode(node.children[0], UC, addFn, extendedTree.left);
     }
