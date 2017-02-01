@@ -1,22 +1,74 @@
 /* eslint-disable */
+function AVLCreator(pause, highlight) {
 class AVLTree {
   constructor(value) {
     this.root = new Node(value);
   }
   add(value) {
-    if (!this.root) {
+    if (!this.root || this.root.value === undefined) {
       this.root = new Node(value);
     }
     else {
-      this.root.add(value);
+      this.root.add(value, this.root);
     }
   }
-  toJSON() {
-    return JSON.stringify(this.root.serialize(), null, 4);
+  remove(value) {
+    const current = this.root;
+    const parents = [];
+    let replacementParent, replacement, childCount, parent;
+    childCount = (current.left !== null ? 1 : 0) + (current.right !== null ? 1 : 0);
+    if (current.value === value){
+      switch(childCount){
+        case 0:
+          this.root.value = undefined;
+          break;
+        case 1:
+          replacement = (current.right === null ? current.left : current.right);
+          highlight(this);
+          highlight(replacement);
+          this.root = replacement;
+          break;
+        case 2:
+          replacement = this.root.left;
+          while (replacement.right) {
+            if (replacementParent) parents.push(replacementParent);
+            replacementParent = replacement;
+            replacement = replacement.right;
+          }
+          highlight(this);
+          highlight(replacement);
+          if (replacementParent) {
+            replacementParent.right = replacement.left;
+            replacementParent.updateInNewLocation();
+            pause(this.root);
+            this.root = replacement;
+            this.root.right = current.right;
+            this.root.left = current.left;
+            pause(this.root);
+            while(parents.length) {
+              parent = parents.pop();
+              parent.updateInNewLocation();
+              parent.balance(this.root);
+            }
+          } else {
+            this.root = replacement;
+            this.root.right = current.right;
+          }
+          this.root.updateInNewLocation();
+          this.root.balance(this.root);
+          pause(this.root);
+          break;
+      }
+    } else {
+      this.root.remove(value, this.root);
+    }
   }
-  toObject() {
-    return this.root.serialize();
-  }
+  // toJSON() {
+  //   return JSON.stringify(this.root.serialize(), null, 4);
+  // }
+  // toObject() {
+  //   return this.root.serialize();
+  // }
 }
 
 class Node {
@@ -25,20 +77,22 @@ class Node {
     this.left = null;
     this.right = null;
     this.height = 1;
+    this._id = Math.floor(Math.random()*1000);
   }
-  add(value) {
+  add(value, root) {
     if (value > this.value) {
-      this.right ? this.right.add(value) : this.right = new Node(value);
+      this.right ? this.right.add(value, root) : this.right = new Node(value);
       if (!this.left || this.right.height > this.left.height) {
         this.height = this.right.height + 1;
       } 
     } else if (value < this.value){
-      this.left ? this.left.add(value) : this.left = new Node(value);
+      this.left ? this.left.add(value, root) : this.left = new Node(value);
       if (!this.right || this.right.height < this.left.height) {
         this.height = this.left.height + 1;
       }
     }
-    this.balance();
+    this.balance(root);
+    pause(root)
   }
   traverse(cb) {
     cb(this);
@@ -58,20 +112,19 @@ class Node {
       }
     }
   }
-  replaceRoot(newRoot) {
-    this.value = newRoot.value;
-    this.left = newRoot.left;
-    this.right = newRoot.right;
-  }
-  remove(value) {
-    var found    = false,
-      parent     = null,
-      current    = this,
-      root       = this,
+  remove(value, root) {
+    var found           = false,
+      parent            = null,
+      current           = this,
+      alteredParents    = [],
+      subAlteredParents = [],
       childCount,
       replacement,
-      replacementParent;
+      replacementParent,
+      alteredParent,
+      subAlteredParent;
     while(!found && current) {
+      alteredParents.push(current);
       if (value < current.value) {
         parent = current;
         current = current.left;
@@ -82,95 +135,82 @@ class Node {
         found = true;
       }
     }
+    alteredParents.pop();
     if (found) {
       childCount = (current.left !== null ? 1 : 0) + (current.right !== null ? 1 : 0);
-      if (current === root){
-        switch(childCount){
-          case 0:
-            this.value = null;
-            break;
-          case 1:
-            replacement = (current.right === null ? current.left : current.right);
-            // highlight(this);
-            // highlight(replacement);
-            this.replaceRoot(replacement);
-            break;
-          case 2:
-            replacement = this.left;
-            while (replacement.right) {
-              replacementParent = replacement;
-              replacement = replacement.right;
-            }
-            // highlight(this);
-            // highlight(replacement);
-            if (replacementParent) {
-              replacementParent.right = replacement.left;
-              this.value = replacement.value;
-            } else {
-              this.left = replacement.left;
-              this.value = replacement.value;
-            }
-            break;
-        } 
-      } else {
-        switch (childCount){
-          case 0:
-            // highlight(current);
-            if (current.value < parent.value) {
-              parent.left = null;
-            } else {
-              parent.right = null;
-            }
-            break;
-          case 1:
-            // highlight(current);
-            // current.left ? highlight(current.left) : highlight(current.right);
-            if (current.value < parent.value){
-              parent.left = (current.left === null ? 
-              current.right : current.left);
-              //if the current value is greater than its 
-              //parent's, reset the right pointer
-            } else {
-              parent.right = (current.left === null ? 
-              current.right : current.left);
-            }
-            break;
-          //two children, a bit more complicated
-          case 2:
-            //reset pointers for new traversal
-            replacement = current.left;
-            replacementParent = current;
-            //find the right-most node
-            while(replacement.right){
-              replacementParent = replacement;
-              replacement = replacement.right;
-            }
-            // highlight(current);
-            // highlight(replacement)
-            if (replacementParent !== current){
+      switch (childCount){
+        case 0:
+          // highlight(current);
+          if (current.value < parent.value) {
+            parent.left = null;
+          } else {
+            parent.right = null;
+          }
+          pause(root)
+          break;
+        case 1:
+          highlight(current);
+          current.left ? highlight(current.left) : highlight(current.right);
+          if (current.value < parent.value){
+            parent.left = (current.left === null ? 
+            current.right : current.left);
+            //if the current value is greater than its 
+            //parent's, reset the right pointer
+          } else {
+            parent.right = (current.left === null ? 
+            current.right : current.left);
+          }
+          pause(root)
+          break;
+        //two children, a bit more complicated
+        case 2:
+          //reset pointers for new traversal
+          replacement = current.left;
+          replacementParent = current;
+          //find the right-most node
+          while(replacement.right){
+            subAlteredParents.push(replacement);
+            replacementParent = replacement;
+            replacement = replacement.right;
+          }
+          highlight(current);
+          highlight(replacement)
+          if (replacementParent !== current){
             replacementParent.right = replacement.left;
-            } else {
-              current.left = replacement.left;
-            }
+          } else {
+            current.left = replacement.left;
+          }
 
-            //assign children to the replacement
-            replacement.right = current.right;
-            replacement.left = current.left;
+          //assign children to the replacement
+          replacement.right = current.right;
+          replacement.left = current.left;
 
-            //place the replacement in the right spot
-            if (current.value < parent.value){
-              parent.left = replacement;
-            } else {
-              parent.right = replacement;
-            }          
-            break;
-            //no default
-        }
+          //place the replacement in the right spot
+          if (current.value < parent.value){
+            parent.left = replacement;
+          } else {
+            parent.right = replacement;
+          }
+          pause(root)
+          while (subAlteredParents.length) {
+            subAlteredParent = subAlteredParents.pop();
+            subAlteredParent.updateInNewLocation();
+            subAlteredParent.balance();
+          }
+          replacement.updateInNewLocation();
+          replacement.balance(root);
+          break;
+          //no default
+      }
+      
+      while (alteredParents.length) {
+        alteredParent = alteredParents.pop();
+        alteredParent.updateInNewLocation();
+        alteredParent.balance(root);
       }
     }
   }
-  balance() {
-    let tree = this;
+  balance(root) {
     const rightHeight = (this.right) ? this.right.height : 0;
     const leftHeight = (this.left) ? this.left.height : 0;
     
@@ -179,65 +219,72 @@ class Node {
       const leftLeftHeight = (this.left.left) ? this.left.left.height : 0;
       
       if (leftRightHeight > leftLeftHeight) {
-        this.left.rotateRR();
+        this.left.rotateRR(root);
       }
       
-      this.rotateLL();
+      this.rotateLL(root);
     }
     else if ( rightHeight > leftHeight + 1 ) {
       const rightRightHeight = (this.right.right) ? this.right.right.height : 0;
       const rightLeftHeight = (this.right.left) ? this.right.left.height : 0;
       
       if (rightLeftHeight > rightRightHeight) {
-        this.right.rotateLL();
+        this.right.rotateLL(root);
       }
       
-      this.rotateRR();
+      this.rotateRR(root);
     }
   }
-  rotateRR() {
-    // if (this._id) highlight(this);
-    // if(this.left && this.left._id) highlight(this.left)
-    // if(this.right && this.right._id) highlight(this.right)
+  rotateRR(root) {
+    if (this._id) highlight(this.right);
+    pause(root)
     const valueBefore = this.value;
     const leftBefore = this.left;
     this.value = this.right.value;
+    pause(root)
     this.left = this.right;
     this.right = this.right.right;
+    pause(root)
     this.left.right = this.left.left;
     this.left.left = leftBefore;
+    pause(root)
     this.left.value = valueBefore;
     this.left.updateInNewLocation();
     this.updateInNewLocation();
+    pause(root)
   }
-  rotateLL() {
-    // if(this._id) highlight(this)
-    // if(this.right && this.right._id) highlight(this.right)
-    // if(this.left && this.left._id) highlight(this.left)
+  rotateLL(root) {
+    if(this._id) highlight(this.left)
+    pause(root)
     const valueBefore = this.value;
     const rightBefore = this.right;
     this.value = this.left.value;
+    pause(root)
     this.right = this.left;
     this.left = this.left.left;
+    pause(root)
     this.right.left = this.right.right;
     this.right.right = rightBefore;
+    pause(root)
     this.right.value = valueBefore;
     this.right.updateInNewLocation();
     this.updateInNewLocation();
+    pause(root)
   }
   updateInNewLocation() {
     if (!this.right && !this.left) {
       this.height = 1;
     }
     else if (!this.right || (this.left && this.right.height < this.left.height)) {
-        this.height = this.left.height + 1;
+      this.height = this.left.height + 1;
     }
     else { //if (!this.left || this.right.height > this.left.height)
-        this.height = this.right.height + 1;
+      this.height = this.right.height + 1;
     }
   }
 }
-
+return AVLTree;
+}
 export default {
-  AVLTree
+  AVLCreator
 }
