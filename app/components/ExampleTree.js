@@ -3,16 +3,15 @@ import { Link } from 'react-router';
 import jsplumb from 'jsplumb';
 import Tree from './Tree';
 import Header from '../containers/Header';
-import { flatten, augment, pause, mapConnections } from '../utils/vertTreeUtils';
+import { flatten, augment, pause, highlight, mapConnections } from '../utils/vertTreeUtils';
 import * as structures from '../utils/TreeStructures';
 import * as styles from '../styles/Home.scss';
 
 export default class ExampleTree extends Component {
   constructor(props) {
     super(props);
-    this.jsTreeData = this.props.treeData.present.toJS();
-    this.augmentedState = augment(this.jsTreeData[0], structures.AVLTree);
     this.jsplumb = null;
+    this.augmentDataStructure();
   }
 
   componentDidMount() {
@@ -32,6 +31,15 @@ export default class ExampleTree extends Component {
 
   componentWillUnmount() {
     this.jsplumb.reset();
+  }
+
+  augmentDataStructure() {
+    const { treeData, callAsync, updateStructure, highlightNode } = this.props;
+    const AVLTree = structures.AVLCreator(
+      pause.bind(null, callAsync.bind(null, updateStructure)),
+      highlight.bind(null, callAsync.bind(null, highlightNode))
+    );
+    this.augmentedState = augment(treeData.present.toJS()[0], AVLTree);
   }
 
   drawConnections() {
@@ -54,12 +62,7 @@ export default class ExampleTree extends Component {
   }
 
   execute(method, ...args) {
-    const { callAsync, updateStructure, delay, endAsync } = this.props;
-    let next = method;
-    while (next) {
-      next = this.augmentedState[next].apply(this.augmentedState, args);
-      pause(callAsync.bind(null, updateStructure, delay, endAsync), this.augmentedState.root);
-    }
+    this.augmentedState[method](...args);
   }
 
   render() {
