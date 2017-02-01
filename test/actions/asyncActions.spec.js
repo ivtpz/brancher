@@ -1,46 +1,43 @@
 import chai, { expect } from 'chai';
-import { callAsync, endAsync, setDelay } from '../../app/actions/asyncActions'
+import { callAsync, endAsync, setDelay, startAsync } from '../../app/actions/asyncActions';
 import { spy } from 'sinon';
-import sinonChai from 'sinon-chai'
+import configureStore from 'redux-mock-store';
+import thunk from 'redux-thunk';
+import sinonChai from 'sinon-chai';
+
+const mockStore = configureStore([thunk]);
+let store;
 
 chai.use(sinonChai)
 
 const actionSpy = spy();
-const endAsyncSpy = spy(endAsync);
-const newState = {data: []}
 
 describe('Async Actions', function() {
 
   describe('Call Async', function() {
-    it('Should return an object with type ASYNC_ACTIVE', function() {
-      expect(callAsync(()=>{}, 0, endAsyncSpy, {}).type).to.equal('ASYNC_ACTIVE')
+    before((done) => {
+      store = mockStore({async: {delay: 100}});
+      store.dispatch(callAsync(actionSpy, {}));
+      store.dispatch(callAsync(actionSpy, {}));
+      setTimeout(done, 150);
     })
-    before(function(done) {
-      callAsync(actionSpy, 200, endAsyncSpy, newState)
-      callAsync(actionSpy, 200, endAsyncSpy, newState)
-      setTimeout(done, 300);
+    it('Should return a function', function() {
+      expect(callAsync()).to.be.a('function')
     })
-    it('Should execute an action with passed in state after a delay', function() {
-      expect(actionSpy).to.have.been.calledWith(newState)
+    it('Should dispatch Start Async', function() {
+      let actions = store.getActions();
+      expect(actions[0]).to.deep.equal(startAsync());
     })
     it('Should space action execution by specified delay', function() {
       expect(actionSpy).to.have.been.calledOnce
-
-      describe('End Async', function() {
-        before(function(done) {
-          callAsync(() => {}, 200, endAsyncSpy, {})
-          callAsync(() => {}, 200, endAsyncSpy, {})
-          setTimeout(done, 1000)
-        })
-        it('Should return an object with type ASYNC_INACTIVE', function() {
-          expect(endAsync().type).to.equal('ASYNC_INACTIVE')
-        })
-        //TODO: write asyncqueue as observable to alert end of queue
-        it('Should execute the first endAsync action passed to call async when queue is empty', function() {
-          expect(endAsyncSpy).to.have.been.calledOnce
-        })
-      })
     })
+  })
+
+  describe('End Async', function() {
+    it('Should return an object with type ASYNC_INACTIVE', function() {
+      expect(endAsync().type).to.equal('ASYNC_INACTIVE')
+    })
+
   })
 
   describe('Set Delay', function() {
