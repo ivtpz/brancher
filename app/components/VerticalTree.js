@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router';
 import AceEditor from 'react-ace';
-import jsplumb from 'jsplumb';
 import brace from 'brace'; // eslint-disable-line no-unused-vars
 import 'brace/mode/javascript';
 import 'brace/theme/monokai';
@@ -11,58 +10,16 @@ import 'brace/theme/kuroir';
 import 'brace/theme/katzenmilch';
 import 'brace/theme/chrome';
 import * as styles from '../styles/Home.scss';
-import Tree from './Tree';
 import PopOver from '../containers/PopOver';
+import Visualizer from './Visualizer';
 import { flatten, pause, mapConnections, highlight, augment } from '../utils/vertTreeUtils';
 import tutorialWindows from '../tutorial/treeTutorial';
 import Header from '../containers/Header';
 
 export default class VerticalTree extends Component {
-  constructor(props) {
-    super(props);
-    this.jsplumb = null;
-  }
-
-  componentDidMount() {
-    this.jsplumb = jsplumb.getInstance();
-    this.drawConnections();
-    window.addEventListener('resize', (e) => {
-      e.preventDefault();
-      this.jsplumb.repaintEverything();
-    });
-  }
-
-  componentDidUpdate() {
-    this.jsplumb.detachEveryConnection();
-    this.jsplumb.deleteEveryEndpoint();
-    this.drawConnections();
-  }
-
-  componentWillUnmount() {
-    this.jsplumb.reset();
-  }
 
   onChange(newVal) {
     this.props.updateCode(newVal);
-  }
-
-  drawConnections() {
-    const treeArray = flatten(this.props.treeData.present).toJS();
-    const connections = mapConnections(treeArray);
-    for (let parent in connections) {
-      if (connections.hasOwnProperty(parent)) {
-        connections[parent].forEach(child => {
-          this.jsplumb.connect({
-            source: parent,
-            target: child,
-            anchor: ['Perimeter', { shape: 'Circle', anchorCount: 180 }],
-            endpoint: ['Dot', { radius: 1 }],
-            connector: ['Straight'],
-            paintStyle: { stroke: 'gray', strokeWidth: 2 }
-          });
-        });
-      }
-    }
   }
 
   runCode() {
@@ -107,27 +64,10 @@ export default class VerticalTree extends Component {
           headerType='code'
         />
         <div className={styles.homeContainer}>
-          <div className={styles.treeContainer}>
-            {treeArray.map((treeLevel, index) => {
-              return (
-                <div key={index} className={styles.levelContainer}>
-                  {
-                    treeLevel.map(
-                      (section, ind) =>
-                        <Tree
-                          key={ind}
-                          levelID={index}
-                          sectionID={ind}
-                          numSections={treeLevel.length}
-                          value={section}
-                          delay={delay}
-                        />
-                    )
-                  }
-                </div>
-              );
-            })}
-          </div>
+          <Visualizer 
+            treeArray={treeArray}
+            delay={delay}
+          />
           <div className={styles.editor}>
             <AceEditor
               mode='javascript'
