@@ -2,8 +2,16 @@ import undoable from 'redux-undo-immutable';
 import { fromJS } from 'immutable';
 import { findPathByNodeId } from '../utils/vertTreeUtils';
 
+const defaultState = fromJS([
+  {
+    value: undefined,
+    children: [],
+    _id: 1000
+  }
+]);
+
 const verticalTreeData = (
-  state = fromJS([{ value: 1, children: [{ value: 2, children: [], _id: 2000 }], _id: 1000 }]),
+  state = defaultState,
   action
 ) => {
   let path = findPathByNodeId(action.nodeId, state);
@@ -16,14 +24,17 @@ const verticalTreeData = (
     case 'UNHIGHLIGHT_NODE':
       path.push('highlighted');
       return state.setIn(path, false);
+    case 'RESET_TO_DEFAULT':
+      return defaultState;
     default:
       return state;
   }
 };
 
-const undoableVerticalTreeData = undoable(verticalTreeData, {
-  limit: 12
-});
+const undoableVerticalTreeData = undoable(
+  verticalTreeData,
+  { limit: 20 }
+);
 
 export default {
   verticalTreeData: undoableVerticalTreeData,
