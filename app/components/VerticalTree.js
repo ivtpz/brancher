@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router';
 import AceEditor from 'react-ace';
 import brace from 'brace'; // eslint-disable-line no-unused-vars
 import 'brace/mode/javascript';
@@ -91,7 +90,6 @@ export default class VerticalTree extends Component {
                 }
               }
             />
-            <Link to="/">Main Menu</Link>
             <button
               className={styles.helpButton}
               onClick={swapCode}
