@@ -4,7 +4,6 @@
   justify-content: space-between;
   position: relative;
   height: 600px;
-  top: 20px;
   padding-right: 40px;
 }
 
@@ -30,10 +29,12 @@
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  align-items: flex-start;
-  width: 100%;
-  padding: 5px;
+  align-items: center;
+  padding-left: 5px;
+  padding-right: 5px;
   border-bottom: 1px solid gainsboro;
+  background: linear-gradient(#fcfcfc, #e5e5e5);
+  margin-bottom: 10px;
 }
 
 .editor {
@@ -77,6 +78,14 @@
   display: none;
 }
 
+.logo {
+  background-image: url('../assets/BrancherLogo.png');
+  background-size: 50px 50px;
+  background-position: center center;
+  width: 50px;
+  height: 50px;
+}
+
 .animationSpeedContainer {
   display: inherit;
 }
@@ -99,36 +108,34 @@
   color: gainsboro;
 }
 
-.lightning {
+.molasses {
   @extend .delaySpeed;
-  background-color: rgba(240, 17, 9, 0.7);
-}
-
-.fast {
-  @extend .delaySpeed;
-  color: white;
-  background-color: rgba(232, 133, 4, 0.7);
-}
-
-.normal {
-  @extend .delaySpeed;
-  text-shadow: 1px 1px slategray;
-  background-color:rgba(242, 210, 10, 0.8); 
-}
-
-.slow {
-  @extend .delaySpeed;
-  background-color: rgba(16, 89, 25, 0.7);
+  background-color: rgba(0, 1, 130, 0.7);
 }
 
 .turtle {
   @extend .delaySpeed;
-  background-color: rgba(6, 75, 204, 0.7);
+  background-color: rgba(0, 40, 150, 0.7);
 }
 
-.molasses {
+.slow {
   @extend .delaySpeed;
-  background-color: rgba(54, 15, 193, 0.7);
+  background-color:rgba(0, 80, 175, 0.7); 
+}
+
+.normal {
+  @extend .delaySpeed;
+  background-color: rgba(0, 120, 200, 0.7);
+}
+
+.fast {
+  @extend .delaySpeed;
+  background-color: rgba(0, 160, 225, 0.5);
+}
+
+.lightning {
+  @extend .delaySpeed;
+  background-color: rgba(0, 215, 255, 0.5);
 }
 
 @mixin box-shadow($top, $left, $blur, $color, $inset: false) {
@@ -185,7 +192,7 @@ button {
 }
 
 .lighterButton {
-  background: radial-gradient(ghostwhite, gainsboro);
+  background: radial-gradient(white, #f7f7f7);
   &:hover:enabled {
     border: 2px solid #adadad;
   }
@@ -196,6 +203,10 @@ button {
   background: radial-gradient(rgba(50, 150, 150, 0.6), rgba(50, 150, 150, 0.9));
   color: white;
   min-width: 60px;
+  &:disabled {
+    color: gainsboro;
+    background-color: grey;
+  }
 }
 
 .helpButton {
@@ -212,17 +223,21 @@ button {
   @include box-shadow(0, 3px, 4px, rgba(0, 0, 0, 0.2));
 }
 
-.leftButtons {
+.rightButtons {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+  align-items: center;
   padding-right: 5px;
 }
 
 .userInput input {
   width: 40px;
   height: 25px;
-  margin-right: 5px;
+  margin-right: 3px;
+  margin-left: 5px;
+  font-size: 18px;
+  text-align: center;
 }
 
 .userInput {
