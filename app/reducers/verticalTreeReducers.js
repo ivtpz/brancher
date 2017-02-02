@@ -2,13 +2,7 @@ import undoable from 'redux-undo-immutable';
 import { fromJS } from 'immutable';
 import { findPathByNodeId } from '../utils/vertTreeUtils';
 
-const defaultState = fromJS([
-  {
-    value: undefined,
-    children: [],
-    _id: 1000
-  }
-]);
+const defaultState = fromJS([{ value: undefined, children: [], _id: 1000 }]);
 
 const verticalTreeData = (
   state = defaultState,
