@@ -7,8 +7,11 @@ const highlightNode = nodeId => (dispatch, getState) => {
 
 const unHighlightNode = nodeId => ({ type: 'UNHIGHLIGHT_NODE', nodeId });
 
+const resetTree = () => ({ type: 'RESET_TO_DEFAULT' });
+
 export default {
   updateStructure,
   highlightNode,
-  unHighlightNode
+  unHighlightNode,
+  resetTree
 };
