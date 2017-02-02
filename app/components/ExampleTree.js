@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router';
 import Header from '../containers/Header';
 import Visualizer from './Visualizer';
 import { flatten, augment, pause, highlight } from '../utils/vertTreeUtils';
@@ -12,12 +11,13 @@ export default class ExampleTree extends Component {
   }
 
   augmentDataStructure() {
-    const { treeData, callAsync, updateStructure, highlightNode } = this.props;
-    const AVLTree = structures.AVLCreator(
+    const { treeData, dataStructure, callAsync, updateStructure, highlightNode } = this.props;
+    const exampleTree = structures[dataStructure](
       pause.bind(null, callAsync.bind(null, updateStructure)),
       highlight.bind(null, callAsync.bind(null, highlightNode))
     );
-    this.augmentedState = augment(treeData.present.toJS()[0], AVLTree);
+    this.augmentedState = augment(treeData.present.toJS()[0], exampleTree);
+    pause(updateStructure, this.augmentedState.root);
   }
 
   execute(method, ...args) {
@@ -38,7 +38,6 @@ export default class ExampleTree extends Component {
           treeArray={treeArray}
           delay={delay}
         />
-        <Link to="/">Main Menu</Link>
       </div>
     );
   }
