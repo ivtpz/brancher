@@ -27,6 +27,7 @@
   },
   "build": {
     "productName": "Brancher",
+    "appId": "app.brancher",
     "category": "public.app-category.tools",
     "dmg": {
       "contents": [
@@ -45,6 +46,8 @@
     },
     "files": [
       "dist/",
+      "assets/",
+      "fonts/",
       "node_modules/",
       "app.html",
       "main.js",
@@ -62,7 +65,7 @@
     }
   },
   "directories": {
-    "buildResources": "resources",
+    "buildResources": "assets",
     "output": "release"
   },
   "bin": {

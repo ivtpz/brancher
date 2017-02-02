@@ -29,6 +29,8 @@ app.use(wdm);
 
 app.use(webpackHotMiddleware(compiler));
 
+app.use(express.static('app/assets'));
+
 const server = app.listen(PORT, 'localhost', serverError => {
   if (serverError) {
     return console.error(serverError);
