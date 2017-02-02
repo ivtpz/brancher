@@ -17,7 +17,6 @@ export default class ExampleTree extends Component {
       highlight.bind(null, callAsync.bind(null, highlightNode))
     );
     this.augmentedState = augment(treeData.present.toJS()[0], exampleTree);
-    pause(updateStructure, this.augmentedState.root);
   }
 
   execute(method, ...args) {
