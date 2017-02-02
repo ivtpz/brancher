@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router';
 import AnimationSpeedSelector from './AnimationSpeedSelector';
 import UndoRedoCreator from '../containers/UndoRedo';
 import UserAction from './UserAction';
@@ -26,6 +27,7 @@ export default class Header extends Component {
       dataType,
       runCode,
       delay,
+      delayed,
       openTutorial,
       highlightHelp,
       tutorialActive,
@@ -43,7 +45,10 @@ export default class Header extends Component {
     return (
       <div className={styles.header}>
         <div className={backdropClass} onClick={closeTutorial} />
-        <UndoRedo />
+        <div className={styles.rightButtons}>
+          <Link to='/'><div className={styles.logo} /></Link>
+          <UndoRedo />
+        </div>
         <AnimationSpeedSelector delay={delay} changeDelay={this.changeDelay.bind(this)} />
         {headerType === 'code' ?
           (<div>
@@ -58,11 +63,11 @@ export default class Header extends Component {
               onClick={lightenTheme}
               disabled={themeIndex >= themeOptions - 1}
             >Lighter</button>
-          </div>) : <UserAction buttonAction={execute} />
+          </div>) : <UserAction buttonAction={execute} asyncActive={delayed} />
         }
         {headerType === 'code' ?
-          <div className={styles.leftButtons} >
-            <button className={styles.runButton} onClick={runCode}>Run</button>
+          <div className={styles.rightButtons} >
+            <button className={styles.runButton} disabled={delayed} onClick={runCode}>Run</button>
             <button className={helpClass} onClick={openTutorial}>Help</button>
           </div> : null
         }
