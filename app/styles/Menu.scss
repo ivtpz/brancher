@@ -17,7 +17,7 @@ a {
 .pageContainer {
   background:
     url('../assets/brancherTree.png'),
-    linear-gradient(45deg, rgba(0, 150, 200, .5) 10%, rgba(0, 1, 150, .7));
+    linear-gradient(45deg, rgba(0, 216, 255, .5) 10%, rgba(0, 1, 130, .7));
   background-repeat: no-repeat;
   background-position: center top;
   width: 100vw;
@@ -38,6 +38,12 @@ a {
   border-radius: 50%;
   width: 400px;
   height: 400px;
+}
+
+.optionsCircle {
+  @extend .menuCircle;
+  justify-content: center;
+  align-items: center;
 }
 
 .title {
