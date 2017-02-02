@@ -52,6 +52,7 @@ export default class VerticalTree extends Component {
       delay,
       theme,
       swapCode,
+      resetTree,
       isBinaryTree
     } = this.props;
     const treeArray = flatten(treeData.present).toJS();
@@ -92,7 +93,10 @@ export default class VerticalTree extends Component {
             />
             <button
               className={styles.helpButton}
-              onClick={swapCode}
+              onClick={() => {
+                resetTree();
+                swapCode();
+              }}
             >
               {isBinaryTree ? 'Switch to Tree' : 'Switch to Binary'}
             </button>
