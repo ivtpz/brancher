@@ -5,8 +5,9 @@ class AVLTree {
     this.root = new Node(value);
   }
   add(value) {
-    if (!this.root || this.root.value === undefined) {
+    if (!this.root || this.root.value === null || this.root.value === undefined) {
       this.root = new Node(value);
+      pause(this.root);
     }
     else {
       this.root.add(value, this.root);
@@ -20,13 +21,15 @@ class AVLTree {
     if (current.value === value){
       switch(childCount){
         case 0:
-          this.root.value = undefined;
+          this.root.value = null;
+          pause(this.root);
           break;
         case 1:
           replacement = (current.right === null ? current.left : current.right);
-          highlight(this);
+          highlight(this.root);
           highlight(replacement);
           this.root = replacement;
+          pause(this.root);
           break;
         case 2:
           replacement = this.root.left;
@@ -35,7 +38,7 @@ class AVLTree {
             replacementParent = replacement;
             replacement = replacement.right;
           }
-          highlight(this);
+          highlight(this.root);
           highlight(replacement);
           if (replacementParent) {
             replacementParent.right = replacement.left;
@@ -63,12 +66,9 @@ class AVLTree {
       this.root.remove(value, this.root);
     }
   }
-  // toJSON() {
-  //   return JSON.stringify(this.root.serialize(), null, 4);
-  // }
-  // toObject() {
-  //   return this.root.serialize();
-  // }
+  find(value) {
+    return this.root.contains(value);
+  }
 }
 
 class Node {
@@ -91,8 +91,8 @@ class Node {
         this.height = this.left.height + 1;
       }
     }
+    pause(root);
     this.balance(root);
-    pause(root)
   }
   traverse(cb) {
     cb(this);
@@ -100,6 +100,8 @@ class Node {
     if (this.right) this.right.traverse(cb);
   }
   contains(value) {
+    console.log(this, value)
+    highlight(this);
     if (this.value === value) {
       return true;
     } else {
@@ -236,11 +238,14 @@ class Node {
     }
   }
   rotateRR(root) {
-    if (this._id) highlight(this.right);
-    pause(root)
+    if (this._id) {
+      highlight(this);
+      highlight(this.right);
+    }
     const valueBefore = this.value;
     const leftBefore = this.left;
     this.value = this.right.value;
+    this.right.value = valueBefore;
     pause(root)
     this.left = this.right;
     this.right = this.right.right;
@@ -248,17 +253,20 @@ class Node {
     this.left.right = this.left.left;
     this.left.left = leftBefore;
     pause(root)
-    this.left.value = valueBefore;
+    //this.left.value = valueBefore;
     this.left.updateInNewLocation();
     this.updateInNewLocation();
     pause(root)
   }
   rotateLL(root) {
-    if(this._id) highlight(this.left)
-    pause(root)
+    if(this._id) {
+      highlight(this);
+      highlight(this.left);
+    }
     const valueBefore = this.value;
     const rightBefore = this.right;
     this.value = this.left.value;
+    this.left.value = valueBefore;
     pause(root)
     this.right = this.left;
     this.left = this.left.left;
@@ -266,7 +274,7 @@ class Node {
     this.right.left = this.right.right;
     this.right.right = rightBefore;
     pause(root)
-    this.right.value = valueBefore;
+    //this.right.value = valueBefore;
     this.right.updateInNewLocation();
     this.updateInNewLocation();
     pause(root)
