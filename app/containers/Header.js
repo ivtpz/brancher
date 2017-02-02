@@ -10,9 +10,9 @@ function mapStateToProps(state) {
   return {
     tutorialActive: state.tutorial.get('active'),
     highlightHelp: state.tutorial.get('highlightHelp'),
-    delay: state.async.delay,
     themeIndex: state.userCode.themeIndex,
-    themeOptions: state.userCode.themeOptions
+    themeOptions: state.userCode.themeOptions,
+    ...state.async
   };
 }
 
