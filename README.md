@@ -27,6 +27,7 @@ Dowbload `Brancher.Setup.0.0.3.exe` for 64-bit systems.
 See [contributing guidelines](https://github.com/ivtpz/brancher/CONTRIBUTING.md).
 
 Once you have forked and cloned the repo, simply:
+
 1. Run `npm install`
 2. Use `npm run hot-server` and `npm run start-hot` to start the dev server
 3. Be sure to follow the [style guide](https://github.com/ivtpz/brancher/STYLE-GUIDE.md), and run `npm run test` and `npm run lint` before submitting any changes
