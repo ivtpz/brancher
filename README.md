@@ -1,4 +1,7 @@
-# ![](https://cloud.githubusercontent.com/assets/11566750/22597948/9df4f148-ea29-11e6-9b3d-8351ce293971.png) Brancher
+![](https://cloud.githubusercontent.com/assets/11566750/22597948/9df4f148-ea29-11e6-9b3d-8351ce293971.png) 
+
+# Brancher
+
 [![Build Status](https://travis-ci.org/ivtpz/brancher.svg?branch=master)](https://travis-ci.org/ivtpz/brancher)
 
 
