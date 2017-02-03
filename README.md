@@ -7,7 +7,7 @@
 
 Brancher is a desktop app, built on [Electron](https://github.com/electron/electron) for visualizing JavaScript data structures. It was scaffolded with this [boilerplate](https://github.com/chentsulin/electron-react-boilerplate). 
 
-![Screen Shot](brancher/app/assets/BrancherScreenShot.png)
+![Screen Shot](https://github.com/ivtpz/brancher/blob/master/app/assets/BrancherScreenShot.png)
 
 You can use it to create your own tree-like data structures and view the results, or see examples of functioning trees. 
 
