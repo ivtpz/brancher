@@ -46,7 +46,7 @@
     },
     "files": [
       "dist/",
-      "assets/",
+      "assets/**/*",
       "node_modules/",
       "app.html",
       "main.js",
