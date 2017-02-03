@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import TransitionGroup from 'react-addons-transition-group';
-import * as styles from '../styles/Home.scss';
+import * as styles from './Home.scss';
 import Node from './Node';
 
 class Tree extends Component {

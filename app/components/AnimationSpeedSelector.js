@@ -1,5 +1,5 @@
 import React from 'react';
-import * as styles from '../styles/Home.scss';
+import * as styles from './Home.scss';
 
 const delayToText = (delay) => {
   if (delay <= 100) {

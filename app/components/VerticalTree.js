@@ -8,7 +8,7 @@ import 'brace/theme/tomorrow_night_blue';
 import 'brace/theme/kuroir';
 import 'brace/theme/katzenmilch';
 import 'brace/theme/chrome';
-import * as styles from '../styles/Home.scss';
+import * as styles from './Home.scss';
 import PopOver from '../containers/PopOver';
 import Visualizer from './Visualizer';
 import { flatten, pause, highlight, augment } from '../utils/vertTreeUtils';

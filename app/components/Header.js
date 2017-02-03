@@ -3,7 +3,7 @@ import { Link } from 'react-router';
 import AnimationSpeedSelector from './AnimationSpeedSelector';
 import UndoRedoCreator from '../containers/UndoRedo';
 import UserAction from './UserAction';
-import * as styles from '../styles/Home.scss';
+import * as styles from './Home.scss';
 
 export default class Header extends Component {
 

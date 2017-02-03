@@ -1,5 +1,5 @@
 import React from 'react';
-import * as styles from '../styles/PopOver.scss';
+import * as styles from './PopOver.scss';
 
 const PopOver = ({
   order,

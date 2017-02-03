@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router';
-import * as styles from '../styles/Menu.scss';
+import * as styles from './Menu.scss';
 
 export default class ExampleStructureOptions extends Component {
   render() {

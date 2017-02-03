@@ -44,7 +44,8 @@ app.on('ready', async () => {
   mainWindow = new BrowserWindow({
     show: false,
     width: 1024,
-    height: 728
+    height: 728,
+    icon: `file://${__dirname}/assets/BrancherLogo.png`
   });
 
   mainWindow.loadURL(`file://${__dirname}/app.html`);

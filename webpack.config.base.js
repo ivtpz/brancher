@@ -30,7 +30,10 @@ export default validate({
       ]
     }, {
       test: /\.(png|jpg)$/,
-      loader: 'url-loader'
+      loader: 'url-loader',
+      query: {
+        limit: 10000
+      }
     }, {
       test: /\.woff(\?v=\d+\.\d+\.\d+)?$/,
       loader: "file-loader?mimetype=application/font-woff"

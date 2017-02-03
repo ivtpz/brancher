@@ -10,7 +10,7 @@ import merge from 'webpack-merge';
 import formatter from 'eslint-formatter-pretty';
 import baseConfig from './webpack.config.base';
 
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 6491;
 
 export default validate(merge(baseConfig, {
   debug: true,

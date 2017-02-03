@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import jsplumb from 'jsplumb';
 import Tree from './Tree';
 import { mapConnections } from '../utils/vertTreeUtils';
-import * as styles from '../styles/Home.scss';
+import * as styles from './Home.scss';
 
 export default class Visualizer extends Component {
   constructor(props) {

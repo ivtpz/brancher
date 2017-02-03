@@ -47,7 +47,6 @@
     "files": [
       "dist/",
       "assets/",
-      "fonts/",
       "node_modules/",
       "app.html",
       "main.js",

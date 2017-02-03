@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import * as styles from '../styles/Home.scss';
+import * as styles from './Home.scss';
 
 export default class UserAction extends Component {
   constructor(props) {
