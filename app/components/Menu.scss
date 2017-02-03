@@ -1,6 +1,6 @@
 @font-face {
   font-family: 'Lobster';
-  src: url(http://localhost:6491/fonts/Lobster_1.3.otf);
+  src: url('http://localhost:6491/fonts/Lobster_1.3.otf');
 }
 
 body {
@@ -14,7 +14,7 @@ a {
 
 .pageContainer {
   background:
-    url(http://localhost:6491/brancherTree.png),
+    url('http://localhost:6491/brancherTree.png'),
     linear-gradient(45deg, rgba(0, 216, 255, .5) 10%, rgba(0, 1, 130, .7));
   background-repeat: no-repeat;
   background-position: center top;
