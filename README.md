@@ -1,5 +1,5 @@
 # Brancher
-[![Build Status](https://travis-ci.org/ivtpz/brancher.svg?branch=master)](https://travis-ci.org/ivtpz/brancher) ![](resources/icons/126x126.png?raw=true)
+[![Build Status](https://travis-ci.org/ivtpz/brancher.svg?branch=master)](https://travis-ci.org/ivtpz/brancher) ![](https://cloud.githubusercontent.com/assets/11566750/22597799/018f4b00-ea29-11e6-9378-3abb6ff98c89.png)
 
 
 Brancher is a desktop app, built on [Electron](https://github.com/electron/electron) for visualizing JavaScript data structures. It was scaffolded with this [boilerplate](https://github.com/chentsulin/electron-react-boilerplate). 
