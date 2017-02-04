@@ -1,1 +1,6 @@
 flow-typed/**/*.js
+node-modules/
+app/node-modules/
+dist/
+release/
+app/main.*

@@ -44,7 +44,6 @@
     "no-alert": "off",
     "no-nested-ternary": "off",
     "wrap-iife": "off",
-    "flowtype-errors/show-errors": 2
   },
   "plugins": [
     "flowtype",
