@@ -1,4 +1,3 @@
-/* eslint-disable */
 /**
  * Base webpack config used across other specific configs
  */
@@ -8,8 +7,6 @@ import validate from 'webpack-validator';
 import {
   dependencies as externals
 } from './app/package.json';
-import autoprefixer from 'autoprefixer';
-
 
 export default validate({
   module: {
@@ -55,16 +52,14 @@ export default validate({
   },
 
   // https://webpack.github.io/docs/configuration.html#resolve
+  /**
+   * Determine the array of extensions that should be used to resolve modules.
+   */
   resolve: {
     extensions: ['', '.js', '.jsx', '.json'],
     packageMains: ['webpack', 'browser', 'web', 'browserify', ['jam', 'main'], 'main']
   },
 
   plugins: [],
-
-  postcss: [
-      autoprefixer({ browsers: ['IE >= 9', 'last 2 versions', '> 1%'] }),
-  ],
-
   externals: Object.keys(externals || {})
 });

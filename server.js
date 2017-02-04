@@ -16,7 +16,7 @@ const argv = require('minimist')(process.argv.slice(2));
 
 const app = express();
 const compiler = webpack(config);
-const PORT = process.env.PORT || 6491;
+const PORT = process.env.PORT || 3000;
 
 const wdm = webpackDevMiddleware(compiler, {
   publicPath: config.output.publicPath,
@@ -28,8 +28,6 @@ const wdm = webpackDevMiddleware(compiler, {
 app.use(wdm);
 
 app.use(webpackHotMiddleware(compiler));
-
-app.use(express.static('app/assets'));
 
 const server = app.listen(PORT, 'localhost', serverError => {
   if (serverError) {

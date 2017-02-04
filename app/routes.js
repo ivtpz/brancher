@@ -6,7 +6,6 @@ import ExampleStructureOptions from './components/ExampleStructureOptions';
 import VerticalTree from './containers/VerticalTree';
 import ExampleTree from './containers/ExampleTree';
 
-
 export default (
   <Route path="/" component={App}>
     <IndexRoute component={Menu} />
