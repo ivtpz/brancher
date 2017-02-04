@@ -54,7 +54,10 @@ export default validate(merge(baseConfig, {
       // Images
       {
         test: /\.(?:ico|gif|png|jpg|jpeg|webp)$/,
-        loader: 'url-loader'
+        loader: 'url-loader',
+        query: {
+          limit: 10000
+        }
       }
     ]
   },
