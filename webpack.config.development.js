@@ -56,7 +56,7 @@ export default validate(merge(baseConfig, {
   eslint: {
     formatter
   },
-  
+
   plugins: [
     // https://webpack.github.io/docs/hot-module-replacement-with-webpack.html
     new webpack.HotModuleReplacementPlugin(),
