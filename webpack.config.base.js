@@ -30,7 +30,7 @@ export default validate({
       test: /\.(png|jpg)$/,
       loader: 'url-loader',
       query: {
-        limit: 10000
+        limit: 60000
       }
     }, {
       test: /\.woff(\?v=\d+\.\d+\.\d+)?$/,
@@ -39,8 +39,12 @@ export default validate({
       test: /\.woff2(\?v=[0-9]\.[0-9]\.[0-9])?$/,
       loader: "url-loader?limit=10000&mimetype=application/font-woff"
     }, { 
-      test: /\.(ttf|eot|svg|otf)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
-      loader: "file-loader"
+      test: /\.(ttf|otf)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
+      loader: "url-loader",
+      query: {
+        limit: 45000,
+        mimetype: 'application/octet-stream'
+      }
     }]
   },
 

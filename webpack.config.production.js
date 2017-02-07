@@ -5,7 +5,7 @@
 import path from 'path';
 import webpack from 'webpack';
 import validate from 'webpack-validator';
-import ExtractTextPlugin from 'extract-text-webpack-plugin';
+// import ExtractTextPlugin from 'extract-text-webpack-plugin';
 import merge from 'webpack-merge';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
 import BabiliPlugin from 'babili-webpack-plugin';
@@ -18,7 +18,7 @@ export default validate(merge(baseConfig, {
     path: path.join(__dirname, 'app/dist'),
     publicPath: '../dist/'
   },
-
+/*
   module: {
     loaders: [
       // Extract all .global.css to style.css as is
@@ -40,7 +40,7 @@ export default validate(merge(baseConfig, {
       }
 
     ]
-  },
+  }, */
 
   plugins: [
     /**
@@ -69,7 +69,7 @@ export default validate(merge(baseConfig, {
       deadcode: false,
     }),
 
-    new ExtractTextPlugin('style.css', { allChunks: true }),
+    // new ExtractTextPlugin('style.css', { allChunks: true }),
 
     /**
      * Dynamically generate index.html page
