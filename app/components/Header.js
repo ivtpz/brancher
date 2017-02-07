@@ -4,7 +4,7 @@ import AnimationSpeedSelector from './AnimationSpeedSelector';
 import UndoRedoCreator from '../containers/UndoRedo';
 import UserAction from './UserAction';
 import * as styles from './Home.scss';
-// var Logo = require('../assets/48x48.png');
+import Logo from '../assets/48x48.png';
 
 export default class Header extends Component {
 
@@ -47,7 +47,7 @@ export default class Header extends Component {
       <div className={styles.header}>
         <div className={backdropClass} onClick={closeTutorial} />
         <div className={styles.rightButtons}>
-          <Link to='/'><div className={styles.backArrow}>🡸</div></Link>
+          <Link to='/'><img src={Logo}></img></Link>
           <UndoRedo />
         </div>
         <AnimationSpeedSelector delay={delay} changeDelay={this.changeDelay.bind(this)} />
