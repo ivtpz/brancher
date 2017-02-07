@@ -117,6 +117,7 @@
     "babili-webpack-plugin": "^0.0.9",
     "boiler-room-custodian": "^0.6.1",
     "chai": "^3.5.0",
+    "chai-immutable": "^1.6.0",
     "concurrently": "^3.1.0",
     "cross-env": "^3.1.4",
     "css-loader": "^0.26.1",
