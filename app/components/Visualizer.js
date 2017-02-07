@@ -1,3 +1,4 @@
+/* eslint react/no-array-index-key: 0 */
 import React, { Component } from 'react';
 import jsplumb from 'jsplumb';
 import Tree from './Tree';

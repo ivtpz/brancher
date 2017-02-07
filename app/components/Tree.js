@@ -11,9 +11,9 @@ class Tree extends Component {
       <div className={styles.childrenContainer} style={{ width: `${100 / numSections}%` }}>
         {value.map((node, index) => {
           return (
-            <TransitionGroup key={index}>
+            <TransitionGroup key={node ? node._id : index}>
               <Node
-                key={index}
+                key={node ? node._id : index}
                 id={`${levelID}-${sectionID}-${index}`}
                 styleClass={node ?
                   (node[1] ? styles.highlightedNode : styles.vertNode)

@@ -47,7 +47,7 @@ export default class Header extends Component {
       <div className={styles.header}>
         <div className={backdropClass} onClick={closeTutorial} />
         <div className={styles.rightButtons}>
-          <Link to='/'><img src={Logo}></img></Link>
+          <Link to='/'><img src={Logo} alt='Menu' /></Link>
           <UndoRedo />
         </div>
         <AnimationSpeedSelector delay={delay} changeDelay={this.changeDelay.bind(this)} />
