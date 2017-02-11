@@ -9,15 +9,16 @@ const verticalTreeData = (
   action
 ) => {
   let path = findPathByNodeId(action.nodeId, state);
+  if (path) {
+    path.push('highlighted');
+  }
   switch (action.type) {
     case 'UPDATE_VERT_STRUCTURE':
       return action.newState;
     case 'HIGHLIGHT_NODE':
-      path.push('highlighted');
-      return state.setIn(path, true);
+      return path ? state.setIn(path, true) : state;
     case 'UNHIGHLIGHT_NODE':
-      path.push('highlighted');
-      return state.setIn(path, false);
+      return path ? state.setIn(path, false) : state;
     case 'RESET_TO_DEFAULT':
       return defaultState;
     default:
