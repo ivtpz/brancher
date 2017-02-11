@@ -1,6 +1,6 @@
 /* eslint-disable */
-// Binary Tree with working removal
-function BiTree (tree, pause, highlight, augment) {		
+// AVL Tree with working removal
+function BiTree (tree, pause, highlight, augment) {
 		class Node {
 	    constructor(value=null, left=null, right=null) {
 	      this.value = value;
@@ -13,7 +13,7 @@ function BiTree (tree, pause, highlight, augment) {
 	        this.right ? this.right.add(value) : this.right = new Node(value);
           if (!this.left || this.right.height > this.left.height) {
             this.height = this.right.height + 1;
-          } 
+          }
         } else if (value < this.value){
 	        this.left ? this.left.add(value) : this.left = new Node(value);
           if (!this.right || this.right.height < this.left.height) {
@@ -94,7 +94,7 @@ function BiTree (tree, pause, highlight, augment) {
                   this.value = replacement.value;
                 }
                 break;
-            } 
+            }
 	        } else {
 	          switch (childCount){
 	            case 0:
@@ -109,12 +109,12 @@ function BiTree (tree, pause, highlight, augment) {
 	              highlight(current);
                 current.left ? highlight(current.left) : highlight(current.right);
 	              if (current.value < parent.value){
-                  parent.left = (current.left === null ? 
+                  parent.left = (current.left === null ?
                   current.right : current.left);
-                  //if the current value is greater than its 
+                  //if the current value is greater than its
                   //parent's, reset the right pointer
                 } else {
-                  parent.right = (current.left === null ? 
+                  parent.right = (current.left === null ?
                   current.right : current.left);
                 }
 	              break;
@@ -145,7 +145,7 @@ function BiTree (tree, pause, highlight, augment) {
                   parent.left = replacement;
                 } else {
                   parent.right = replacement;
-                }          
+                }
                 break;
                 //no default
 	          }
@@ -156,25 +156,25 @@ function BiTree (tree, pause, highlight, augment) {
     let tree = this;
     const rightHeight = (this.right) ? this.right.height : 0;
     const leftHeight = (this.left) ? this.left.height : 0;
-    
+
     if ( leftHeight > rightHeight + 1 ) {
       const leftRightHeight = (this.left.right) ? this.left.right.height : 0;
       const leftLeftHeight = (this.left.left) ? this.left.left.height : 0;
-      
+
       if (leftRightHeight > leftLeftHeight) {
         this.left.rotateRR();
       }
-      
+
       this.rotateLL();
     }
     else if ( rightHeight > leftHeight + 1 ) {
       const rightRightHeight = (this.right.right) ? this.right.right.height : 0;
       const rightLeftHeight = (this.right.left) ? this.right.left.height : 0;
-      
+
       if (rightLeftHeight > rightRightHeight) {
         this.right.rotateLL();
       }
-      
+
       this.rotateRR();
     }
   }
@@ -220,11 +220,11 @@ function BiTree (tree, pause, highlight, augment) {
     }
   }
 }
-	  
+
 		let extendedTree = augment(tree, Node);
 		//extendedTree.add(Math.floor(Math.random()*300))
 		//extendedTree.remove(12)
-		
+
 		let newTree = new Node(150);
 		for (var i = 0; i < 15; i++) {
 		  newTree.add(Math.floor(Math.random()*300));
