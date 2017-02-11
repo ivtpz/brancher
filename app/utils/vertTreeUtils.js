@@ -129,9 +129,11 @@ const pause = (action, tree) => {
 
 const highlight = (action, node) => {
   if (node.hasOwnProperty('_id')) {
-    action(node._id);
+    action(node._id, null);
   } else {
-    alert('You can only pass pre-existing nodes to highlight, not newly created nodes.');
+    // If the node has no id, the highlight action will
+    // have to access tree state and find the id
+    action(null, node.value);
   }
 };
 
@@ -198,6 +200,21 @@ const findPathByNodeId = (id, tree) => {
   return immutablePath;
 };
 
+const findNodeIdByValue = (value, tree) => {
+  if (tree.get('value') === value) {
+    return tree.get('_id');
+  } else {
+    let children = tree.get('children');
+    for (let i = 0; i < children.size; i++) {
+      let childId = findNodeIdByValue(value, children.get(i));
+      if (childId !== null) {
+        return childId;
+      }
+    }
+  }
+  return null;
+};
+
 export default {
   flatten,
   convertToImmutable,
@@ -207,5 +224,6 @@ export default {
   addIds,
   highlight,
   findPathByNodeId,
-  augment
+  augment,
+  findNodeIdByValue
 };
