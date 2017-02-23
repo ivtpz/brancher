@@ -1,8 +1,8 @@
 import { List, Map } from 'immutable';
 
-const findNodeIndex = (value, list) => {
+const findNodeIndex = (value, list, prop) => {
   for (let i = 0; i < list.size; i++) {
-    if (list.get(i).get('value') === value) {
+    if (list.get(i).get(prop) === value) {
       return i;
     }
   }
@@ -15,6 +15,7 @@ const flatten = list => {
   while (node) {
     flatList.push(Map({
       value: node.value,
+      _id: node._id,
       highlighted: false
     }));
     node = node.next;
@@ -24,7 +25,8 @@ const flatten = list => {
 
 const pause = (action, list) => action(flatten(list));
 
-const highlight = node => node.value;
+const highlight = (action, node) => Number.isInteger(node._id) ?
+  action(null, node._id) : action(node.value, null);
 
 export default {
   findNodeIndex,
