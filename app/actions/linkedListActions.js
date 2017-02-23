@@ -4,9 +4,11 @@ const updateStructure = newState => {
   return { type: 'UPDATE_LIST_STRUCTURE', newState };
 };
 
-const highlightNode = nodeValue => (dispatch, getState) => {
+const highlightNode = (nodeValue, nodeId) => (dispatch, getState) => {
   const stateList = getState().linkedListData.present;
-  const nodeIndex = findNodeIndex(nodeValue, stateList);
+  const searchProp = Number.isInteger(nodeValue) ? 'value' : '_id';
+  const searchValue = Number.isInteger(nodeValue) ? nodeValue : nodeId;
+  const nodeIndex = findNodeIndex(searchValue, stateList, searchProp);
   setTimeout(() => dispatch(unHighlightNode(nodeIndex)), getState().async.delay / 1.1);
   dispatch({ type: 'HIGHLIGHT_NODE', nodeIndex });
 };
