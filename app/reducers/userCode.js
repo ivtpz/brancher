@@ -1,5 +1,6 @@
 import treeCode from '../starterCode/tree';
-import binaryTreeCode from '../starterCode/binaryTree';
+import binaryCode from '../starterCode/binaryTree';
+import linkedListCode from '../starterCode/linkedList';
 
 const themes = [
   'monokai',
@@ -12,7 +13,8 @@ const themes = [
 
 const userCode = (state = {
   userCode: treeCode,
-  altCode: binaryTreeCode,
+  binaryCode,
+  linkedListCode,
   themeIndex: 0,
   theme: themes[0],
   themeOptions: themes.length,
@@ -25,8 +27,8 @@ const userCode = (state = {
     case 'TOGGLE_TREE_TYPE':
       return {
         ...state,
-        userCode: state.altCode,
-        altCode: state.userCode,
+        userCode: state.binaryCode,
+        binaryCode: state.userCode,
         binary: !state.binary
       };
     case 'DARKEN_THEME':
