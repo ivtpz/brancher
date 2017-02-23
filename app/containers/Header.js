@@ -1,7 +1,7 @@
 // @flow
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import Header from '../components/Header';
+import Header from '../components/Header/Header';
 import * as asyncActions from '../actions/asyncActions';
 import * as tutorialActions from '../actions/tutorialActions';
 import * as userCodeActions from '../actions/userCodeActions';

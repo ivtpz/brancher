@@ -1,7 +1,7 @@
 // @flow
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import PopOver from '../components/PopOver';
+import PopOver from '../components/Popover/PopOver';
 import * as tutorialActions from '../actions/tutorialActions';
 
 function mapStateToProps(state) {

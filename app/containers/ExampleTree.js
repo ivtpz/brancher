@@ -1,7 +1,7 @@
 // @flow
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import ExampleTree from '../components/ExampleTree';
+import ExampleTree from '../components/Trees/TreeExample';
 import * as verticalTreeActions from '../actions/verticalTreeActions';
 import * as asyncActions from '../actions/asyncActions';
 

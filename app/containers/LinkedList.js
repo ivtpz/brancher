@@ -1,7 +1,7 @@
 // @flow
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import LinkedList from '../components/LinkedList';
+import LinkedList from '../components/LinkedLists/LinkedList';
 import * as linkedListActions from '../actions/linkedListActions';
 import * as asyncActions from '../actions/asyncActions';
 import * as userCodeActions from '../actions/userCodeActions';
