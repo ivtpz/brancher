@@ -1,5 +1,5 @@
 /* eslint-disable */
-export default `function BiTree (tree, pause, highlight, augment) {
+export default `function BiTree (pause, highlight) {
 	class Node {
     constructor(value) {
       this.value = value;

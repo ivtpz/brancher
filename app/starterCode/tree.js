@@ -1,9 +1,10 @@
 /* eslint-disable */
-export default `function Tree (tree, pause, highlight, augment) {
+export default `function Tree (pause, highlight) {
   class Node {
     constructor(value) {
       this.value = value;
       this.children = [];
+      this._id = Math.floor(Math.random()*10000);
     }
     add(value) {
       this.children.push(new Node(value));
@@ -15,8 +16,6 @@ export default `function Tree (tree, pause, highlight, augment) {
       }
     }
   }
-	let extendedTree = augment(tree, Node);
-	extendedTree.traverse(highlight);
 
   let newTree = new Node(1)
   pause(newTree);

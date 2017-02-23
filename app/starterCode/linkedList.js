@@ -28,6 +28,7 @@ export default `function linkedList (pause, highlight) {
     constructor(value) {
       this.value = value;
       this.next = null;
+			this._id = Math.floor(Math.random()*10000);
     }
   }
 
