@@ -1,8 +1,8 @@
 import React from 'react';
 import { Route, IndexRoute } from 'react-router';
 import App from './containers/App';
-import Menu from './components/Menu';
-import OptionsMenu from './components/OptionsMenu';
+import Menu from './components/Menu/Menu';
+import OptionsMenu from './components/Menu/OptionsMenu';
 import VerticalTree from './containers/VerticalTree';
 import ExampleTree from './containers/ExampleTree';
 import LinkedList from './containers/LinkedList';
