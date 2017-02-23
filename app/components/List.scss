@@ -1,0 +1,13 @@
+.listContainer {
+  width: 100%;
+}
+
+.listNode {
+  width: 100px;
+  border: 1px solid black;
+}
+
+.highlightedListNode {
+  @extend .listNode;
+  border: 1px solid red;
+}
