@@ -1,0 +1,68 @@
+@font-face {
+  font-family: 'Lobster';
+  src: url('../../assets/fonts/Lobster_1.3.otf') format('truetype');
+}
+
+body {
+  margin: 0px;
+}
+
+a {
+  text-decoration: none;
+  outline: none;
+}
+
+.pageContainer {
+  background:
+    url('../../assets/brancherTree.png'),
+    linear-gradient(45deg, rgba(0, 216, 255, .5) 10%, rgba(0, 1, 130, .7));
+  background-repeat: no-repeat;
+  background-position: center top;
+  width: 100vw;
+  height: 100vh;
+}
+
+.menuContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.menuCircle {
+  @extend .menuContainer;
+  margin-top: 110px;
+  background-color: rgba(0, 0, 0, 0.6);
+  border-radius: 50%;
+  width: 400px;
+  height: 400px;
+}
+
+.optionsCircle {
+  @extend .menuCircle;
+  justify-content: center;
+  align-items: center;
+}
+
+.title {
+  font-size: 6.8em;
+  font-family: 'Lobster';
+  color: white;
+  text-shadow: 4px 4px rgba(0, 0, 0, 0.6);
+  margin-bottom: 40px;
+  margin-top: 80px;
+}
+
+.menuLink {
+  font-family: 'Lobster';
+  font-size: 2.5em;
+  color: gainsboro;
+  text-align: center;
+  padding-top: 5px;
+  transition: all 0.1s ease 0s;
+  width: 260px;
+  &:hover {
+    background-color: rgba(0, 0, 0, 0.8);
+    color: white;
+  }
+}

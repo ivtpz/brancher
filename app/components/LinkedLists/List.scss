@@ -1,0 +1,41 @@
+.homeContainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  position: relative;
+  height: 600px;
+  padding-right: 40px;
+}
+
+.editor {
+  width: 70%;
+  min-width: 500px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+.listContainer {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  align-content: flex-start;
+}
+
+.listNode {
+  background-color: white;
+  width: 50px;
+  height: 35px;
+  border: 2px solid dimgray;
+  margin: 20px;
+  z-index: 1000;
+  text-align: center;
+  padding-top: 15px;
+  font-size: 18px;
+}
+
+.highlightedListNode {
+  @extend .listNode;
+  border: 2px solid red;
+  background-color: rgba(193, 66, 66, 0.4);
+}
