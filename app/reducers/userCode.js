@@ -13,6 +13,7 @@ const themes = [
 
 const userCode = (state = {
   userCode: treeCode,
+  treeCode,
   binaryCode,
   linkedListCode,
   themeIndex: 0,
@@ -24,6 +25,12 @@ const userCode = (state = {
   switch (action.type) {
     case 'UPDATE_CODE':
       return { ...state, userCode: action.newCode };
+    case 'UPDATE_TREE_CODE':
+      return { ...state, treeCode: action.newCode };
+    case 'UPDATE_BINARY_CODE':
+      return { ...state, BinaryCode: action.newCode };
+    case 'UPDATE_LINKED_LIST_CODE':
+      return { ...state, linkedListCode: action.newCode };
     case 'TOGGLE_TREE_TYPE':
       return {
         ...state,

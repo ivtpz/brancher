@@ -1,7 +1,7 @@
 import undoable from 'redux-undo-immutable';
 import { List, Map } from 'immutable';
 
-const defaultState = List([Map({ value: 1 })]);
+const defaultState = List([Map({ value: 1, _id: 1000 })]);
 
 const linkedListData = (
   state = defaultState,
@@ -9,7 +9,7 @@ const linkedListData = (
 ) => {
   let index = action.nodeIndex;
   let path = [index];
-  if (index && index !== -1) {
+  if (Number.isInteger(index) && index !== -1) {
     path.push('highlighted');
   }
   switch (action.type) {
