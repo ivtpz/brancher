@@ -9,7 +9,7 @@ import 'brace/theme/kuroir';
 import 'brace/theme/katzenmilch';
 import 'brace/theme/chrome';
 
-export default ({ changeFn, theme, userCode }) => {
+export default ({ changeFn, theme, userCode, annotations }) => {
   return (
     <AceEditor
       mode='javascript'
@@ -23,6 +23,7 @@ export default ({ changeFn, theme, userCode }) => {
       onChange={changeFn}
       name='TREE_EDITOR'
       editorProps={{ $blockScrolling: true }}
+      annotations={annotations}
       enableBasicAutocompletion
       enableLiveAutocompletion
       onLoad={
