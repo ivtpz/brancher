@@ -39,6 +39,7 @@
 .editor {
   width: 70%;
   min-width: 500px;
+  z-index: 200;
   display: flex;
   flex-direction: column;
   align-items: flex-end;
