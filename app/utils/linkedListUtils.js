@@ -2,7 +2,7 @@ import { List, Map } from 'immutable';
 
 const findNodeIndex = (value, list, prop) => {
   for (let i = 0; i < list.size; i++) {
-    if (list.get(i).get(prop) === value) {
+    if (list && typeof list === 'object' && list.get(i).get(prop) === value) {
       return i;
     }
   }
