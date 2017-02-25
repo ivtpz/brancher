@@ -1,3 +1,4 @@
+/* eslint-disable */
 /**
  * Protect against infinite loops.
  * Look for for, while and do loops, and insert a check function at the start of

@@ -1,4 +1,7 @@
-const windowReducers = (state = { width: window.innerWidth, height: window.innerHeight }, action) => {
+const windowReducers = (state = {
+  width: window.innerWidth,
+  height: window.innerHeight
+}, action) => {
   switch (action.type) {
     case 'UPDATE_WIDTH':
       return { ...state, width: action.newWidth };

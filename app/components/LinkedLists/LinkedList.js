@@ -5,20 +5,15 @@ import LinkedListVisualizer from './LinkedListVisualizer';
 import CodeEditor from '../CodeEditor';
 import { pause, highlight } from '../../utils/linkedListUtils';
 
-const MyWorker = require("worker-loader!../../workers/userCode.worker.js");
+const MyWorker = require('../../workers/userCode.worker.js'); // eslint-disable-line
 
 export default class LinkedList extends Component {
-  constructor(props){
-    super(props);
-    this.annotations = [];
-  }
 
   componentWillMount() {
     const {
       updateStructure,
       callAsync,
       highlightNode,
-      userCode,
       setUserError
     } = this.props;
 
@@ -28,11 +23,10 @@ export default class LinkedList extends Component {
     const applyHighlight = highlight.bind(this, timedHighlight);
 
     this.worker = new MyWorker();
-    console.log(this.worker, MyWorker)
+
     this.worker.onmessage = (m) => {
-      console.log(m.data)
       const { message } = m.data;
-      switch(m.data.type) {
+      switch (m.data.type) {
         case 'pause':
           applyChangeToStore(message);
           break;
@@ -51,9 +45,9 @@ export default class LinkedList extends Component {
           console.log(message);
           break;
         default:
-          console.log('unrecognized web worker message: ' + message);
+          console.log(`unrecognized web worker message: ${message}`);
       }
-    }
+    };
   }
 
   componentWillUnmount() {

@@ -12,6 +12,7 @@ function mapStateToProps(state) {
     theme: state.userCode.theme,
     userCode: state.userCode.userCode,
     isBinaryTree: state.userCode.binary,
+    aceErrors: state.userCode.aceErrors,
     ...state.async,
   };
 }

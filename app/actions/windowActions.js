@@ -5,4 +5,4 @@ const updateHeight = (newHeight) => ({ type: 'UPDATE_HEIGHT', newHeight });
 export default {
   updateWidth,
   updateHeight
-}
+};

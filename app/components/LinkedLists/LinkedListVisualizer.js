@@ -13,7 +13,6 @@ export default class Visualizer extends Component {
     this.jsplumb = jsplumb.getInstance();
     this.drawConnections();
     window.addEventListener('resize', this.respondToResize);
-
   }
 
   componentDidUpdate() {
@@ -24,7 +23,7 @@ export default class Visualizer extends Component {
 
   componentWillUnmount() {
     this.jsplumb.reset();
-    window.removeEventListener('resize', this.respondToResize)
+    window.removeEventListener('resize', this.respondToResize);
   }
 
   respondToResize = (e) => {
@@ -43,11 +42,11 @@ export default class Visualizer extends Component {
       connections = jsList.reduce((links, node, i) => {
         if (node !== undefined && node !== null) {
           let id = `${i}${node.value}`;
-          links[id + 'next'] = []; // eslint-disable-line no-param-reassign
+          links[`${id}next`] = []; // eslint-disable-line no-param-reassign
           if (prevId) {
             links[prevId].push(id);
           }
-          prevId = id + 'next';
+          prevId = `${id}next`;
         }
         return links;
       }, {});
@@ -72,13 +71,13 @@ export default class Visualizer extends Component {
   };
 
   render() {
-    const { linkedListList, windowWidth, windowHeight } = this.props;
+    const { linkedListList, windowHeight } = this.props;
     return (
       <div className={styles.listContainer}>
         {linkedListList && linkedListList.map((node, i) =>
           <div
             style={{
-              paddingLeft: `${(i % Math.floor(windowHeight / 105))*10}px`
+              paddingLeft: `${(i % Math.floor(windowHeight / 105)) * 10}px`
             }}
             className={styles.nodeContainer}
             key={`${i}${node.get('value')}`}

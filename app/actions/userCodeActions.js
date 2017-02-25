@@ -20,7 +20,7 @@ const swapCode = () => {
 
 const setUserError = aceError => {
   return { type: 'SET_USER_ERROR', aceError };
-}
+};
 
 const darken = () => {
   return { type: 'DARKEN_THEME' };
