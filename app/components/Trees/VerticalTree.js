@@ -7,28 +7,59 @@ import { flatten, pause, highlight } from '../../utils/vertTreeUtils';
 import tutorialWindows from '../../tutorial/treeTutorial';
 import Header from '../../containers/Header';
 
+const MyWorker = require('../../workers/userCode.worker.js'); // eslint-disable-line
+
 export default class VerticalTree extends Component {
 
-  onChange = newVal => this.props.updateCode(newVal);
-
-  runCode = () => {
+  componentWillMount() {
     const {
       updateStructure,
       callAsync,
       highlightNode,
-      userCode
+      setUserError
     } = this.props;
+
     const asyncUpdateStructure = callAsync.bind(null, updateStructure);
     const timedHighlight = callAsync.bind(null, highlightNode);
     const applyChangeToStore = pause.bind(this, asyncUpdateStructure);
     const applyHighlight = highlight.bind(this, timedHighlight);
-    const newTree = eval(`(${userCode})`)(
-      applyChangeToStore,
-      applyHighlight
-    );
-    if (typeof newTree === 'object' && newTree.constructor.name === 'Node') {
-      applyChangeToStore(newTree);
-    }
+
+    this.worker = new MyWorker();
+
+    this.worker.onmessage = (m) => {
+      const { message } = m.data;
+      switch (m.data.type) {
+        case 'pause':
+          applyChangeToStore(message);
+          break;
+        case 'highlight':
+          applyHighlight(message);
+          break;
+        case 'error':
+          setUserError({
+            row: message.errorRow,
+            column: message.errorCol,
+            text: message.text,
+            type: 'error'
+          });
+          break;
+        case 'worker_error':
+          console.log(message);
+          break;
+        default:
+          console.log(`unrecognized web worker message: ${message}`);
+      }
+    };
+  }
+
+  componentWillUnmount() {
+    this.worker.terminate();
+  }
+
+  onChange = newVal => this.props.updateCode(newVal);
+
+  runCode = () => {
+    this.worker.postMessage(this.props.userCode);
   };
 
   render() {
@@ -39,7 +70,8 @@ export default class VerticalTree extends Component {
       theme,
       swapCode,
       resetTree,
-      isBinaryTree
+      isBinaryTree,
+      aceErrors
     } = this.props;
     const treeArray = flatten(treeData.present).toJS();
     return (
@@ -59,6 +91,7 @@ export default class VerticalTree extends Component {
               changeFn={this.onChange}
               theme={theme}
               userCode={userCode}
+              annotations={aceErrors}
             />
             <button
               className={styles.helpButton}
