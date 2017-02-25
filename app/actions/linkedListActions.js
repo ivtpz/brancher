@@ -9,8 +9,10 @@ const highlightNode = (nodeValue, nodeId) => (dispatch, getState) => {
   const searchProp = Number.isInteger(nodeValue) ? 'value' : '_id';
   const searchValue = Number.isInteger(nodeValue) ? nodeValue : nodeId;
   const nodeIndex = findNodeIndex(searchValue, stateList, searchProp);
-  setTimeout(() => dispatch(unHighlightNode(nodeIndex)), getState().async.delay / 1.1);
-  dispatch({ type: 'HIGHLIGHT_NODE', nodeIndex });
+  if (nodeIndex !== -1) {
+    setTimeout(() => dispatch(unHighlightNode(nodeIndex)), getState().async.delay / 1.1);
+    dispatch({ type: 'HIGHLIGHT_NODE', nodeIndex });
+  }
 };
 
 const unHighlightNode = nodeIndex => ({ type: 'UNHIGHLIGHT_NODE', nodeIndex });

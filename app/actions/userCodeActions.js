@@ -18,6 +18,10 @@ const swapCode = () => {
   return { type: 'TOGGLE_TREE_TYPE' };
 };
 
+const setUserError = aceError => {
+  return { type: 'SET_USER_ERROR', aceError };
+}
+
 const darken = () => {
   return { type: 'DARKEN_THEME' };
 };
@@ -31,6 +35,7 @@ export default {
   updateTreeCode,
   updateBinaryCode,
   updateLinkedListCode,
+  setUserError,
   darken,
   lighten,
   swapCode
