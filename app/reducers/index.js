@@ -5,6 +5,7 @@ import { linkedListData } from './linkedListReducers';
 import userCode from './userCode';
 import async from './asyncReducers';
 import tutorial from './tutorialReducers';
+import windowReducers from './windowReducers';
 
 const rootReducer = combineReducers({
   routing,
@@ -12,7 +13,8 @@ const rootReducer = combineReducers({
   linkedListData,
   userCode,
   async,
-  tutorial
+  tutorial,
+  windowReducers
 });
 
 export default rootReducer;

@@ -34,7 +34,11 @@ export default class LinkedList extends Component {
       theme,
       linkedListList,
       userCode,
-      delay
+      delay,
+      width,
+      height,
+      updateWidth,
+      updateHeight
     } = this.props;
     return (
       <div>
@@ -47,6 +51,10 @@ export default class LinkedList extends Component {
           <LinkedListVisualizer
             linkedListList={linkedListList.present}
             delay={delay}
+            windowWidth={width}
+            windowHeight={height}
+            updateHeight={updateHeight}
+            updateWidth={updateWidth}
           />
           <div className={styles.editor}>
             <CodeEditor

@@ -12,10 +12,8 @@ export default class Visualizer extends Component {
   componentDidMount() {
     this.jsplumb = jsplumb.getInstance();
     this.drawConnections();
-    window.addEventListener('resize', (e) => {
-      e.preventDefault();
-      this.jsplumb.repaintEverything();
-    });
+    window.addEventListener('resize', this.respondToResize);
+
   }
 
   componentDidUpdate() {
@@ -26,9 +24,17 @@ export default class Visualizer extends Component {
 
   componentWillUnmount() {
     this.jsplumb.reset();
+    window.removeEventListener('resize', this.respondToResize)
   }
 
-  drawConnections() {
+  respondToResize = (e) => {
+    this.props.updateWidth(window.innerWidth);
+    this.props.updateHeight(window.innerHeight);
+    e.preventDefault();
+    this.jsplumb.repaintEverything();
+  };
+
+  drawConnections = () => {
     const { linkedListList } = this.props;
     let prevId;
     let connections = {};
@@ -37,11 +43,11 @@ export default class Visualizer extends Component {
       connections = jsList.reduce((links, node, i) => {
         if (node !== undefined && node !== null) {
           let id = `${i}${node.value}`;
-          links[id] = []; // eslint-disable-line no-param-reassign
+          links[id + 'next'] = []; // eslint-disable-line no-param-reassign
           if (prevId) {
             links[prevId].push(id);
           }
-          prevId = id;
+          prevId = id + 'next';
         }
         return links;
       }, {});
@@ -52,30 +58,41 @@ export default class Visualizer extends Component {
           this.jsplumb.connect({
             source: parent,
             target: child,
-            anchor: [[0, 0.9, -1, 0], [1, 0.9, 0, 0], [1, 0, 1, 0]],
-            endpoint: ['Dot', { radius: 1 }],
+            anchors: ['Center', [[0.5, 0, 0, 0], [0.5, 1, 0, 0]]],
+            endpoint: ['Dot', { radius: 2 }],
             overlays: [
-              ['Arrow', { location: 1, width: 10, length: 10, id: 'arrow' }]
+              ['Arrow', { location: 0.99, width: 12, length: 12, id: 'arrow' }]
             ],
-            connector: ['StateMachine', { curviness: -10 }],
+            connector: ['StateMachine', { curviness: -15, proximityLimit: 40 }],
             paintStyle: { stroke: 'gray', strokeWidth: 2 }
           });
         });
       }
     }
-  }
+  };
 
   render() {
-    const { linkedListList } = this.props;
+    const { linkedListList, windowWidth, windowHeight } = this.props;
     return (
       <div className={styles.listContainer}>
         {linkedListList && linkedListList.map((node, i) =>
           <div
+            style={{
+              paddingLeft: `${(i % Math.floor(windowHeight / 105))*10}px`
+            }}
+            className={styles.nodeContainer}
             key={`${i}${node.get('value')}`}
-            id={`${i}${node.get('value')}`}
-            className={node.get('highlighted') ? styles.highlightedListNode : styles.listNode}
           >
-            {node.get('value')}
+            <div
+              id={`${i}${node.get('value')}`}
+              className={node.get('highlighted') ? styles.highlightedListNode : styles.listNode}
+            >
+              {node.get('value')}
+            </div>
+            <div
+              id={`${i}${node.get('value')}next`}
+              className={node.get('highlighted') ? styles.highlightedNextNode : styles.nextNode}
+            />
           </div>
           )}
       </div>

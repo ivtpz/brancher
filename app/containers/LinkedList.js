@@ -5,6 +5,7 @@ import LinkedList from '../components/LinkedLists/LinkedList';
 import * as linkedListActions from '../actions/linkedListActions';
 import * as asyncActions from '../actions/asyncActions';
 import * as userCodeActions from '../actions/userCodeActions';
+import * as windowActions from '../actions/windowActions';
 
 function mapStateToProps(state) {
   return {
@@ -13,6 +14,7 @@ function mapStateToProps(state) {
     userCode: state.userCode.linkedListCode,
     isDoublyLinked: state.userCode.doublyLinked,
     ...state.async,
+    ...state.windowReducers
   };
 }
 
@@ -21,7 +23,8 @@ function mapDispatchToProps(dispatch) {
     {
       ...linkedListActions,
       ...asyncActions,
-      ...userCodeActions
+      ...userCodeActions,
+      ...windowActions
     }, dispatch);
 }
 
