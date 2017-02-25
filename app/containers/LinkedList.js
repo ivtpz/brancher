@@ -13,6 +13,7 @@ function mapStateToProps(state) {
     theme: state.userCode.theme,
     userCode: state.userCode.linkedListCode,
     isDoublyLinked: state.userCode.doublyLinked,
+    aceErrors: state.userCode.aceErrors,
     ...state.async,
     ...state.windowReducers
   };

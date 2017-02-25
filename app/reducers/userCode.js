@@ -19,7 +19,8 @@ const userCode = (state = {
   themeIndex: 0,
   theme: themes[0],
   themeOptions: themes.length,
-  binary: false
+  binary: false,
+  aceErrors: []
 }, action) => {
   let newIndex;
   switch (action.type) {
@@ -38,6 +39,8 @@ const userCode = (state = {
         binaryCode: state.userCode,
         binary: !state.binary
       };
+    case 'SET_USER_ERROR':
+      return { ...state, aceErrors: [action.aceError] };
     case 'DARKEN_THEME':
       newIndex = Math.max(0, state.themeIndex - 1);
       return {
