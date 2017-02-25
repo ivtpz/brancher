@@ -5,28 +5,65 @@ import LinkedListVisualizer from './LinkedListVisualizer';
 import CodeEditor from '../CodeEditor';
 import { pause, highlight } from '../../utils/linkedListUtils';
 
+const MyWorker = require("worker-loader!../../workers/userCode.worker.js");
+
 export default class LinkedList extends Component {
+  constructor(props){
+    super(props);
+    this.annotations = [];
+  }
 
-  onChange = value => this.props.updateLinkedListCode(value)
-
-  runCode = () => {
+  componentWillMount() {
     const {
       updateStructure,
       callAsync,
       highlightNode,
-      userCode
+      userCode,
+      setUserError
     } = this.props;
+
     const asyncUpdateStructure = callAsync.bind(null, updateStructure);
     const timedHighlight = callAsync.bind(null, highlightNode);
     const applyChangeToStore = pause.bind(this, asyncUpdateStructure);
     const applyHighlight = highlight.bind(this, timedHighlight);
-    const newList = eval(`(${userCode})`)(
-      applyChangeToStore,
-      applyHighlight
-    );
-    if (typeof newList === 'object' && (newList.constructor.name === 'List' || newList.constructor.name === 'Node')) {
-      applyChangeToStore(newList);
+
+    this.worker = new MyWorker();
+    console.log(this.worker, MyWorker)
+    this.worker.onmessage = (m) => {
+      console.log(m.data)
+      const { message } = m.data;
+      switch(m.data.type) {
+        case 'pause':
+          applyChangeToStore(message);
+          break;
+        case 'highlight':
+          applyHighlight(message);
+          break;
+        case 'error':
+          setUserError({
+            row: message.errorRow,
+            column: message.errorCol,
+            text: message.text,
+            type: 'error'
+          });
+          break;
+        case 'worker_error':
+          console.log(message);
+          break;
+        default:
+          console.log('unrecognized web worker message: ' + message);
+      }
     }
+  }
+
+  componentWillUnmount() {
+    this.worker.terminate();
+  }
+
+  onChange = (value) => this.props.updateLinkedListCode(value)
+
+  runCode = () => {
+    this.worker.postMessage(this.props.userCode);
   };
 
   render() {
@@ -38,7 +75,8 @@ export default class LinkedList extends Component {
       width,
       height,
       updateWidth,
-      updateHeight
+      updateHeight,
+      aceErrors
     } = this.props;
     return (
       <div>
@@ -61,6 +99,7 @@ export default class LinkedList extends Component {
               changeFn={this.onChange}
               theme={theme}
               userCode={userCode}
+              annotations={aceErrors}
             />
           </div>
         </div>
