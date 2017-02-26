@@ -4,6 +4,8 @@ import Header from '../../containers/Header';
 import LinkedListVisualizer from './LinkedListVisualizer';
 import CodeEditor from '../CodeEditor';
 import { pause, highlight } from '../../utils/linkedListUtils';
+import tutorialWindows from '../../tutorial/listTutorial';
+import PopOver from '../../containers/PopOver';
 
 const MyWorker = require('../../workers/userCode.worker.js'); // eslint-disable-line
 
@@ -97,6 +99,19 @@ export default class LinkedList extends Component {
             />
           </div>
         </div>
+        {tutorialWindows.map((helpBox, i) => {
+          let { xPos, yPos, text } = helpBox;
+          return (
+            <PopOver
+              key={text}
+              order={i + 1}
+              text={text}
+              xPos={xPos}
+              yPos={yPos}
+              totalLength={tutorialWindows.length}
+            />
+          );
+        })}
       </div>
     );
   }
