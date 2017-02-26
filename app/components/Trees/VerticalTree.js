@@ -103,12 +103,12 @@ export default class VerticalTree extends Component {
               {isBinaryTree ? 'Switch to Tree' : 'Switch to Binary'}
             </button>
           </div>
-          {tutorialWindows.map(helpBox => {
-            let { order, xPos, yPos, text } = helpBox;
+          {tutorialWindows.map((helpBox, i) => {
+            let { xPos, yPos, text } = helpBox;
             return (
               <PopOver
-                key={order}
-                order={order}
+                key={text}
+                order={i + 1}
                 text={text}
                 xPos={xPos}
                 yPos={yPos}
