@@ -1,4 +1,3 @@
-// @flow
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import ExampleTree from '../components/Trees/TreeExample';

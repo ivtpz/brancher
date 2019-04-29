@@ -1,4 +1,3 @@
-// @flow
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import PopOver from '../components/Popover/PopOver';
